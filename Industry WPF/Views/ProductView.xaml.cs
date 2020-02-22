@@ -25,21 +25,26 @@ namespace Industry_WPF.Views
         public ProductView()
         {
             InitializeComponent();
+            ProductView productView = this;
         }
 
         private void createNewWorldButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"Creating New World - started...");
+            //MessageBox.Show($"Creating New World - started...");
             World world = new World();
-            MessageBox.Show($"Creating New World - finished succesfully");
-            
+
+            //MessageBox.Show($"Creating New World - finished succesfully");
             
             //ProductViewModel.Load();
         }
 
         private void Products_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+        }
 
+        private void OrderColumns_Click(object sender, RoutedEventArgs e)
+        {
+            ProductDataGrid.Columns.Where(x => x.Header.ToString() == "Name").First().DisplayIndex = 0;
         }
     }
 }

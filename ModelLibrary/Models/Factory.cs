@@ -16,7 +16,7 @@ namespace ModelLibrary.Models
         public override int Id { get; set; }
         private static int lastId { get; set; }
         public new int Type { get; private set; }// = 1;
-        public int AmountoSend { get; set; }
+        public int AmounToSend { get; set; }
 
         public Factory(string factoryName, int factoryDefProduction, ProductType productType, byte tier)
         {
@@ -49,6 +49,8 @@ namespace ModelLibrary.Models
 
         public void Produce(ProductType productType)
         {
+            //test
+            BaseCost = 10 * Round.RoundNumber;
             if (productType.Id != Product.Id)
             {
                 Product = Product.GetProduct(productType, this);

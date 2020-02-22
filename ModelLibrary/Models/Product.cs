@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using ModelLibrary.Models;
 using System.Linq;
+using System.ComponentModel;
 
 namespace ModelLibrary.Models
 {
-    public class Product : ProductType
+    public class Product : ProductType, INotifyPropertyChanged
     {
         public int AmountIn { get; set; }
         public int AmountOut { get; set; }
@@ -17,6 +18,11 @@ namespace ModelLibrary.Models
         public double ProductProfit { get; set; }
 
         public static Dictionary<Tuple<int, int, int>, Product> ProductD { get; private set; } = new Dictionary<Tuple<int, int, int>, Product>();
+
+        public static List<Product> GetAll()
+        {
+            return ProductD.Values.ToList();
+        }
 
         public Product(int id, byte group, string productName, double defPrice, List<ProductType> components)//, int amount = 0)
             : base(id, group, productName, defPrice, components) { }
@@ -33,6 +39,7 @@ namespace ModelLibrary.Models
         {
             Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type(), facility.Id, product.Id);
             ProductD.Add(pkey, product);
+            OnPropertyChanged();
         }
 
         public static Product GetProduct(ProductType productType, Facility facility)
@@ -66,7 +73,8 @@ namespace ModelLibrary.Models
 
         public static void Demand(City city)
         {
-            int _defDemand = 1;
+            //usuniete
+            //int _defDemand = 1;
             var what = (ProductD.Where(p => p.Key.Item1 == 2).Where(p => p.Key.Item2 == city.Id)).ToList();
             //what.ForEach(i => i.Value.AmountOut = i.Value.Group switch
             //{

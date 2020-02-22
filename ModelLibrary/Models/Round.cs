@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ModelLibrary.Models
 {
-    class Round
+    public class Round
     {
         public static int RoundNumber { get; set; }
         public static void Go()

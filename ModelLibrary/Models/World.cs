@@ -11,14 +11,16 @@ namespace ModelLibrary.Models
     {
         public static List<City> Cities = new List<City>();
         public static List<Factory> Factories = new List<Factory>();
-        public void CreateNewWorld()
+        public static World CreateNewWorld()
         {
-            World world = new World();
+            return new World();
         }
         public World()
         {
             ProductType water = new ProductType(0, 1, "water", 1);
-            ProductType bread = new ProductType(1, 1, "bread", 3, new List<ProductType> { water });
+            ProductType water1 = new ProductType(2, 1, "water", 1);
+
+            ProductType bread = new ProductType(1, 1, "bread", 3, new List<ProductType> { water, water1 });
             List<ProductType> ProductsTypes = new List<ProductType>
             {
                 water,
@@ -75,7 +77,7 @@ namespace ModelLibrary.Models
                     int receiversNumber = World.Factories.Where(factoryR => factoryR.Tier == t - 1).Where(factoryR => factoryR.ProductType.Components != null).Where(factoryR => factoryR.ProductType.Components.Contains(factoryS.ProductType)).Count();
                     receiversNumber += World.Cities.Count();
                     int capacity = factoryS.DefProduction / receiversNumber;
-                    factoryS.AmountoSend = capacity;
+                    factoryS.AmounToSend = capacity;
 
                     foreach (Factory factoryR in World.Factories.Where(factoryR => factoryR.Tier == t - 1).Where(factoryR => factoryR.ProductType.Components != null))
                     {
@@ -99,7 +101,7 @@ namespace ModelLibrary.Models
                 {
                     //int receiversNumber = World.Factories.Where(factoryR => factoryR.ProductType.Components.Contains(factoryS.ProductType)).Count();
                     //receiversNumber += World.Cities.Count();
-                    int capacity = factory.AmountoSend;
+                    int capacity = factory.AmounToSend;
                     TransportOrder transportOrder = new TransportOrder(factory, city, factory.ProductType, capacity);
                     //transportOrder.FewProductsToSend += Form1.OnFewProductsToSendMessage;
                     //transportOrder.Go();
