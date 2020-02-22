@@ -11,9 +11,12 @@ namespace Industry_WPF.ViewModels
     public class WorldViewModel : Conductor<object>, INotifyPropertyChangedEx
     {
         private FactoriesViewModel _factoriesViewModel = new FactoriesViewModel();
+        private CitiesViewModel _citiesViewModel = new CitiesViewModel();
+        private TransportOrdersViewModel _transportOrdersViewModel = new TransportOrdersViewModel();
 
         private World _world;
         private int _RoundNumber = Round.RoundNumber;
+        private Company _company = World.Company;
 
         public int RoundNumber
         {
@@ -24,7 +27,15 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => RoundNumber);
             }
         }
-
+        public Company Company
+        {
+            get { return _company; }
+            set
+            {
+                _company = value;
+                NotifyOfPropertyChange(() => Company);
+            }
+        }
         public World World
         {
             get { return _world; }
@@ -32,7 +43,7 @@ namespace Industry_WPF.ViewModels
         }
         public WorldViewModel()
         {
-            World world = World.CreateNewWorld();
+            _world = World.CreateNewWorld();
         }
 
         public void NextRound()
@@ -41,13 +52,27 @@ namespace Industry_WPF.ViewModels
             RoundNumber = Round.RoundNumber;
             NotifyOfPropertyChange(() => RoundNumber);
             _factoriesViewModel.Load();
-
+            _transportOrdersViewModel.Load();
+            _citiesViewModel.Load();
+            Company = World.Company;
         }
 
         public void ShowFactories()
         {
             ActivateItem(_factoriesViewModel);
             _factoriesViewModel.Load();
+        }
+
+        public void ShowCities()
+        {
+            ActivateItem(_citiesViewModel);
+            _citiesViewModel.Load();
+        }
+
+        public void ShowTransportOrders()
+        {
+            ActivateItem(_transportOrdersViewModel);
+            _transportOrdersViewModel.Load();
         }
     }
 }

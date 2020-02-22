@@ -33,6 +33,7 @@ namespace ModelLibrary.Models
             ProductionCost = productType.Group;
             AmountIn = amount;
             Add(this, facility);
+            facility.Products.Add(this);
         }
 
         public void Add(Product product, Facility facility)
@@ -58,7 +59,6 @@ namespace ModelLibrary.Models
             return ProductD.Where(p => p.Value == this).Select(p => p.Key).Single();
         }
 
-
         public Tuple<int, int> GetMostAndLeastProfitableCities()
         {
             int idMost = ProductD.Where(product => product.Key.Item1 == 2).Where(product => product.Key.Item3 == this.Id).OrderByDescending(product => product.Value.ProductProfit).First().Key.Item2;
@@ -73,22 +73,25 @@ namespace ModelLibrary.Models
 
         public static void Demand(City city)
         {
-            //usuniete
-            //int _defDemand = 1;
-            var what = (ProductD.Where(p => p.Key.Item1 == 2).Where(p => p.Key.Item2 == city.Id)).ToList();
+            int _defDemand = 1;
+            var what = (ProductD.Where(p => p.Key.Item1 == 2).Where(p => p.Key.Item2 == city.Id)).Select(x => x.Value).ToList();
             //what.ForEach(i => i.Value.AmountOut = i.Value.Group switch
             //{
             //    1 => _defDemand * city.Population,
             //    _ => 0,
             //});
-
-            //switch (what.Value.Group)
-            //{
-            //    case 1:
-            //        what.Value.AmountOut = _defDemand * city.Population;
-            //    default:
-            //        what.Value.AmountOut = 0;
-            //}
+            foreach (Product product in what)
+            {
+                switch (product.Group)
+                {
+                    case 1:
+                        product.AmountOut = _defDemand * city.Population;
+                        break;
+                    default:
+                        product.AmountOut = 0;
+                        break;
+                }
+            }
         }
 
         public static void Consume()
@@ -103,8 +106,8 @@ namespace ModelLibrary.Models
                     product.ProductProfit = product.ProductPrice - product.ProductCost;
 
                     double income = product.AmountDone * product.ProductPrice;
-                    Program.Income += income;
-                    Program.Money += income;
+                    World.Company.Income += income;
+                    World.Company.Money += income;
                     double cost = product.AmountDone * product.ProductCost;
                     double profit = income - cost;
                     product.ProductProfit = profit / product.AmountDone;

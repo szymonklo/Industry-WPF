@@ -5,30 +5,59 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Industry_WPF.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="WorldView">
+      d:DesignHeight="450" d:DesignWidth="1500"
+      Title="WorldView" Height="450" Width="1500">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="67*"/>
-            <ColumnDefinition Width="67*"/>
-            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="200*"/>
             <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="67*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
+        <!--Content Control for FActories, Cities, TransportOrders etc.-->
         <Button x:Name="ShowFactories" Content="Factories" Grid.Column="0" Grid.Row="2"/>
-
-        <TextBlock x:Name="RoundNumber" Grid.Column="3" Grid.Row="1"/>
-        <Button x:Name="NextRound" Content="Next Round" Grid.Column="3" Grid.Row="2"/>
-
+        <Button x:Name="ShowCities" Content="Cities" Grid.Column="1" Grid.Row="2"/>
+        <Button x:Name="ShowTransportOrders" Content="TransportOrders" Grid.Column="2" Grid.Row="2"/>
+        
         <ContentControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ActiveItem"/>
+
+        <!--Company-->
+        <TextBlock x:Name="Company_Name" Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" FontSize="24"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="3">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Money: " FontWeight="Bold"/>
+                <TextBlock Text="Income: "/>
+                <TextBlock Text="Cost: "/>
+                <TextBlock Text="Profit: "/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock x:Name="Company_Money" Text="{Binding Company.Money, StringFormat=N2}" TextAlignment="Right" FontWeight="Bold"/>
+                <TextBlock x:Name="Income" Text="{Binding Company.Income, StringFormat=N2}" TextAlignment="Right"/>
+                <TextBlock x:Name="Cost" Text="{Binding Company.Cost, StringFormat=N2}" TextAlignment="Right"/>
+                <TextBlock x:Name="Profit" Text="{Binding Company.Profit, StringFormat=N2}" TextAlignment="Right"/>
+            </StackPanel>
+        </StackPanel>
+            
+        <!--Rounds-->
+        <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="4">
+            <TextBlock>Round: </TextBlock>
+            <TextBlock x:Name="RoundNumber"/>
+        </StackPanel>
+        
+        <Button x:Name="NextRound" Content="Next Round" Grid.Column="4" Grid.Row="5"/>
+
 
     </Grid>
 </Page>

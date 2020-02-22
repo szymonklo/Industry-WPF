@@ -50,7 +50,7 @@ namespace ModelLibrary.Models
         public void Produce(ProductType productType)
         {
             //test
-            BaseCost = 10 * Round.RoundNumber;
+            BaseCost = 10 + Round.RoundNumber;
             if (productType.Id != Product.Id)
             {
                 Product = Product.GetProduct(productType, this);
@@ -101,8 +101,8 @@ namespace ModelLibrary.Models
 
                 Product.AmountOut += Product.AmountDone;
                 produktsOnStockCosts += Product.ProductionCost * Product.AmountDone + BaseCost;
-                Program.Cost -= produktsOnStockCosts;
-                Program.Money -= produktsOnStockCosts;
+                World.Company.Cost += produktsOnStockCosts;
+                World.Company.Money -= produktsOnStockCosts;
                 Product.ProductCost = produktsOnStockCosts / Product.AmountOut;
 
                 TransactionDone?.Invoke(this, new ProductEventArgs(Product.GetProduct(productType, this)));

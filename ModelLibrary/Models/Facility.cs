@@ -10,7 +10,7 @@ namespace ModelLibrary.Models
         //public virtual ProductsKeyed Products { get; set; } = new ProductsKeyed();
         public abstract int Id { get; set; }
         //private int _type;
-
+        public List<Product> Products { get; set; } = new List<Product>();
         public int Type()
         {
             if (this is Factory)

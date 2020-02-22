@@ -68,9 +68,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="ViewModels\CitiesViewModel.cs" />
     <Compile Include="ViewModels\FactoriesViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\TransportOrdersViewModel.cs" />
     <Compile Include="ViewModels\WorldViewModel.cs" />
+    <Compile Include="Views\CitiesView.xaml.cs">
+      <DependentUpon>CitiesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FactoriesView.xaml.cs">
       <DependentUpon>FactoriesView.xaml</DependentUpon>
     </Compile>
@@ -81,14 +86,25 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\TransportOrdersView.xaml.cs">
+      <DependentUpon>TransportOrdersView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WorldView.xaml.cs">
       <DependentUpon>WorldView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\CitiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FactoriesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProductView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TransportOrdersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,10 +12,12 @@ namespace ModelLibrary.Models
         public static int RoundNumber { get; set; }
         public static void Go()
         {
-            Program.Income = 0;
-            Program.Cost = 0;
-            Program.Profit = 0;
+            World.Company.Income = 0;
+            World.Company.Cost = 0;
+            World.Company.Profit = 0;
+
             Console.WriteLine("Round: " + RoundNumber);
+            
             //Cities demand
             Console.WriteLine("**** Cities demand ****\n");
             foreach (City city in World.Cities)
@@ -86,8 +88,9 @@ namespace ModelLibrary.Models
             //}
             Console.WriteLine("\n");
 
-            RoundNumber++;
+            World.Company.CalculateProfit();
 
+            RoundNumber++;
         }
     }
 }

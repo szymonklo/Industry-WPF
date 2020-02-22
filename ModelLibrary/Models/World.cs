@@ -6,21 +6,21 @@ using ModelLibrary.Models;
 
 namespace ModelLibrary.Models
 {
-    
     public class World
     {
         public static List<City> Cities = new List<City>();
         public static List<Factory> Factories = new List<Factory>();
+        public static Company Company = new Company("Noble House");
         public static World CreateNewWorld()
         {
             return new World();
         }
         public World()
         {
-            ProductType water = new ProductType(0, 1, "water", 1);
-            ProductType water1 = new ProductType(2, 1, "water", 1);
+            ProductType water = new ProductType(0, 1, "water", 2);
+            ProductType water1 = new ProductType(2, 1, "water", 2);
 
-            ProductType bread = new ProductType(1, 1, "bread", 3, new List<ProductType> { water, water1 });
+            ProductType bread = new ProductType(1, 1, "bread", 6, new List<ProductType> { water, water1 });
             List<ProductType> ProductsTypes = new List<ProductType>
             {
                 water,

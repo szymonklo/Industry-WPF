@@ -4,9 +4,10 @@ using System.Text;
 
 namespace ModelLibrary.Models
 {
-    class TransportOrder
+    public class TransportOrder
     {
-        public int TransportCost { get; set; } = 1;
+        public int TransportCost { get; set; }
+        public int TransportCostPerUnit { get; set; } = 1;
         public int Amount { get; set; }
         public Facility Sender { get; set; }
         public Facility Receiver { get; set; }
@@ -15,6 +16,11 @@ namespace ModelLibrary.Models
 
         private static Dictionary<Tuple<int, int, int, int, int>, TransportOrder> _transportOrders = new Dictionary<Tuple<int, int, int, int, int>, TransportOrder>();
 
+        public static Dictionary<Tuple<int, int, int, int, int>, TransportOrder> TransportOrders
+        {
+            get => _transportOrders;
+            set => _transportOrders = value;
+        }
 
         //przygotowanie delegata
         public delegate void FewProductsToSendDelegate(Facility c, ProductEventArgs e);
@@ -65,9 +71,10 @@ namespace ModelLibrary.Models
                 }
                 double productInCost = productIn.AmountIn * productIn.ProductCost;
                 productIn.AmountIn += Amount;
+                TransportCost = TransportCostPerUnit * Amount;
                 productInCost += Amount * productS.ProductCost + TransportCost;
-                Program.Cost -= TransportCost;
-                Program.Money -= TransportCost;
+                World.Company.Cost += TransportCost;
+                World.Company.Money -= TransportCost;
                 productIn.ProductCost = productInCost / productIn.AmountIn;
 
                 Console.WriteLine($"Transported {Capacity} {ProductType.Name}");

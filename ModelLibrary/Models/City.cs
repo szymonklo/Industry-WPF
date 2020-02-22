@@ -12,7 +12,9 @@ namespace ModelLibrary.Models
         private static int lastId { get; set; }
         public new int Type { get; private set; }
 
-        public City(string name, int population)//, ProductsKeyed productsOut = null)
+        //public List<Product> Products { get; set; }
+
+    public City(string name, int population)//, ProductsKeyed productsOut = null)
         {
             Name = name;
             Population = population;
