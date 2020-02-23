@@ -10,9 +10,10 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200*"/>
-            <ColumnDefinition Width="200*"/>
-            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="150*"/>
+            <ColumnDefinition Width="150*"/>
+            <ColumnDefinition Width="150*"/>
+            <ColumnDefinition Width="150*"/>
             <ColumnDefinition Width="32*"/>
             <ColumnDefinition Width="67*"/>
         </Grid.ColumnDefinitions>
@@ -30,12 +31,13 @@
         <Button x:Name="ShowFactories" Content="Factories" Grid.Column="0" Grid.Row="2"/>
         <Button x:Name="ShowCities" Content="Cities" Grid.Column="1" Grid.Row="2"/>
         <Button x:Name="ShowTransportOrders" Content="TransportOrders" Grid.Column="2" Grid.Row="2"/>
-        
-        <ContentControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ActiveItem"/>
+        <Button x:Name="ShowProducts" Content="Products" Grid.Column="3" Grid.Row="2"/>
+
+        <ContentControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" x:Name="ActiveItem"/>
 
         <!--Company-->
-        <TextBlock x:Name="Company_Name" Grid.Column="4" Grid.Row="1" Grid.RowSpan="2" FontSize="24"/>
-        <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="3">
+        <TextBlock x:Name="Company_Name" Grid.Column="5" Grid.Row="1" Grid.RowSpan="2" FontSize="24"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="5" Grid.Row="3">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Money: " FontWeight="Bold"/>
                 <TextBlock Text="Income: "/>
@@ -49,14 +51,14 @@
                 <TextBlock x:Name="Profit" Text="{Binding Company.Profit, StringFormat=N2}" TextAlignment="Right"/>
             </StackPanel>
         </StackPanel>
-            
+
         <!--Rounds-->
-        <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="4">
-            <TextBlock>Round: </TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Column="5" Grid.Row="4">
+            <TextBlock>Round:</TextBlock>
             <TextBlock x:Name="RoundNumber"/>
         </StackPanel>
-        
-        <Button x:Name="NextRound" Content="Next Round" Grid.Column="4" Grid.Row="5"/>
+
+        <Button x:Name="NextRound" Content="Next Round" Grid.Column="5" Grid.Row="5"/>
 
 
     </Grid>

@@ -10,7 +10,7 @@ using Industry_WPF.Views;
 
 namespace Industry_WPF.ViewModels
 {
-    public class ProductViewModel : Screen, INotifyPropertyChangedEx
+    public class ProductsViewModel : Screen, INotifyPropertyChangedEx
     {
         private BindableCollection<Product> _products;
         public BindableCollection<Product> Products
@@ -25,20 +25,14 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Products);
             }
         }
-        //List<Product> Products { get; set; }
-        public ProductViewModel()
+        public ProductsViewModel()
         {
-            Products = new BindableCollection<Product>(Product.GetAll());
-            //Products = new BindableCollection<Product>();
-            //World world = new World();
+            
         }
 
         public void Load()
         {
             Products = new BindableCollection<Product>(Product.GetAll());
-
-            //Products = new BindableCollection<Product>(Product.ProductD.Values.ToList());
-            //ProductView.ProductDataGrid.Columns.Where(x => x.Header.ToString() == "Name").First().DisplayIndex = 0;
         }
     }
 }

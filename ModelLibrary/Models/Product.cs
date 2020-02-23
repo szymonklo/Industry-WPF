@@ -13,9 +13,11 @@ namespace ModelLibrary.Models
         public int AmountOut { get; set; }
         public int AmountDone { get; set; }
         public double ProductPrice { get; set; }
+        public double MarketPriceMod { get; set; }
         public double ProductCost { get; set; }
         public double ProductionCost { get; set; }
         public double ProductProfit { get; set; }
+        
 
         public static Dictionary<Tuple<int, int, int>, Product> ProductD { get; private set; } = new Dictionary<Tuple<int, int, int>, Product>();
 
@@ -75,16 +77,18 @@ namespace ModelLibrary.Models
         {
             int _defDemand = 1;
             var what = (ProductD.Where(p => p.Key.Item1 == 2).Where(p => p.Key.Item2 == city.Id)).Select(x => x.Value).ToList();
-            //what.ForEach(i => i.Value.AmountOut = i.Value.Group switch
-            //{
-            //    1 => _defDemand * city.Population,
-            //    _ => 0,
-            //});
+            
             foreach (Product product in what)
             {
                 switch (product.Group)
                 {
                     case 1:
+                        product.AmountOut = _defDemand * city.Population;
+                        break;
+                    case 2:
+                        product.AmountOut = _defDemand * city.Population;
+                        break;
+                    case 3:
                         product.AmountOut = _defDemand * city.Population;
                         break;
                     default:
@@ -99,7 +103,8 @@ namespace ModelLibrary.Models
             foreach (Product product in ProductD.Where(p => p.Key.Item1 == 2).Select(p => p.Value))
                 if (true)   //warunki? demand > 0
                 {
-                    product.ProductPrice = product.DefPrice * product.MarketPriceMod();
+                    product.CalculateMarketPriceMod();
+                    product.ProductPrice = product.DefPrice * product.MarketPriceMod;
                     product.AmountDone = Math.Min(product.AmountOut, product.AmountIn);
                     product.AmountOut -= product.AmountDone;
                     product.AmountIn -= product.AmountDone;
@@ -110,7 +115,8 @@ namespace ModelLibrary.Models
                     World.Company.Money += income;
                     double cost = product.AmountDone * product.ProductCost;
                     double profit = income - cost;
-                    product.ProductProfit = profit / product.AmountDone;
+                    if (product.AmountDone > 0)
+                        product.ProductProfit = profit / product.AmountDone;
 
                     //activate event
                     ProductWasSold?.Invoke(product.GetCity(), EventArgs.Empty);
@@ -132,11 +138,11 @@ namespace ModelLibrary.Models
         public static event EventHandler ProductWasSold;
         public static event EventHandler<ProductEventArgs> TransactionDone;
 
-        public double MarketPriceMod()
+        public void CalculateMarketPriceMod()
         {
             double p = (AmountOut - AmountIn);
             p /= (AmountOut);
-            return p + 1;
+            MarketPriceMod = p + 1;
         }
     }
 }

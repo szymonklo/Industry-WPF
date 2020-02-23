@@ -37,6 +37,7 @@ namespace ModelLibrary.Models
 
             // Products are transported from "tier n" to "tier n-1" factories
             Console.WriteLine("**** Products are transported from tier n to tier n - 1 factories ****\n");
+            /*
             for (int t = 4; t > 0; t--)
             {
                 foreach (Factory factoryS in World.Factories.Where(factory => factory.Tier == t))
@@ -53,10 +54,8 @@ namespace ModelLibrary.Models
                     }
                 }
             }
-            Console.WriteLine("\n");
-
-            //Products are transported from factories to cities
-            Console.WriteLine("**** Products are transported from factories to cities ****\n");
+            */
+            
             foreach (Factory factory in World.Factories)
             {
                 //optimize transportorders
@@ -68,8 +67,16 @@ namespace ModelLibrary.Models
                 cheapTransportOrder.Capacity -= amountChange;
                 expensiveTransportOrder.Capacity += amountChange;
                 //end optimize
-
-                foreach (City city in World.Cities)
+            }
+            //DONE - uwzglednic rowniez transport do miast (po zmianie metody optymalizacji)
+            foreach (TransportOrder transportOrder in TransportOrder.TransportOrders.Values)
+                //.Where(x => x.Key.Item1 == 0).Select(x => x.Value))
+            {
+                transportOrder.Go();
+            }
+            Console.WriteLine("\n");
+            /*2020-02-23
+            foreach (City city in World.Cities)
                 {
                     TransportOrder transportOrder = TransportOrder.GetOrder(factory, city, factory.ProductType);
                     //usuniete
@@ -78,6 +85,7 @@ namespace ModelLibrary.Models
                 }
             }
             Console.WriteLine("\n");
+            */
 
             //Cities consume
             Console.WriteLine("**** Cities consume ****\n");

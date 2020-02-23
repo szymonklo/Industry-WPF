@@ -20,12 +20,12 @@ namespace Industry_WPF.Views
     /// <summary>
     /// Interaction logic for ProductView.xaml
     /// </summary>
-    public partial class ProductView : Page
+    public partial class ProductsView : UserControl
     {
-        public ProductView()
+        public ProductsView()
         {
             InitializeComponent();
-            ProductView productView = this;
+            ProductsView productView = this;
         }
 
         private void createNewWorldButton_Click(object sender, RoutedEventArgs e)

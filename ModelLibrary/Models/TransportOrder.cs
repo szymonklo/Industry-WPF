@@ -14,7 +14,8 @@ namespace ModelLibrary.Models
         public ProductType ProductType { get; set; }
         public int Capacity { get; set; }// = 20;
 
-        private static Dictionary<Tuple<int, int, int, int, int>, TransportOrder> _transportOrders = new Dictionary<Tuple<int, int, int, int, int>, TransportOrder>();
+        private static Dictionary<Tuple<int, int, int, int, int>, TransportOrder> _transportOrders
+            = new Dictionary<Tuple<int, int, int, int, int>, TransportOrder>();
 
         public static Dictionary<Tuple<int, int, int, int, int>, TransportOrder> TransportOrders
         {
@@ -37,13 +38,15 @@ namespace ModelLibrary.Models
         }
         public void Add()
         {
-            Tuple<int, int, int, int, int> tokey = new Tuple<int, int, int, int, int>(Sender.Type(), Sender.Id, Receiver.Type(), Receiver.Id, ProductType.Id);
-            _transportOrders.Add(tokey, this);
+            Tuple<int, int, int, int, int> tokey = new Tuple<int, int, int, int, int>
+                (Sender.Type(), Sender.Id, Receiver.Type(), Receiver.Id, ProductType.Id);
+            TransportOrders.Add(tokey, this);
         }
         public static TransportOrder GetOrder(Facility sender, Facility receiver, ProductType productType)
         {
-            Tuple<int, int, int, int, int> tokey = new Tuple<int, int, int, int, int>(sender.Type(), sender.Id, receiver.Type(), receiver.Id, productType.Id);
-            return _transportOrders[tokey];
+            Tuple<int, int, int, int, int> tokey = new Tuple<int, int, int, int, int>
+                (sender.Type(), sender.Id, receiver.Type(), receiver.Id, productType.Id);
+            return TransportOrders[tokey];
 
         }
         public void Go()
@@ -75,7 +78,8 @@ namespace ModelLibrary.Models
                 productInCost += Amount * productS.ProductCost + TransportCost;
                 World.Company.Cost += TransportCost;
                 World.Company.Money -= TransportCost;
-                productIn.ProductCost = productInCost / productIn.AmountIn;
+                if (productIn.AmountIn > 0)
+                    productIn.ProductCost = productInCost / productIn.AmountIn;
 
                 Console.WriteLine($"Transported {Capacity} {ProductType.Name}");
                 Console.WriteLine($"In {Sender.Name} (origin) left {productS.AmountOut} {ProductType.Name}");

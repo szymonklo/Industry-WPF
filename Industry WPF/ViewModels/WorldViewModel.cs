@@ -13,6 +13,7 @@ namespace Industry_WPF.ViewModels
         private FactoriesViewModel _factoriesViewModel = new FactoriesViewModel();
         private CitiesViewModel _citiesViewModel = new CitiesViewModel();
         private TransportOrdersViewModel _transportOrdersViewModel = new TransportOrdersViewModel();
+        private ProductsViewModel _productsViewModel = new ProductsViewModel();
 
         private World _world;
         private int _RoundNumber = Round.RoundNumber;
@@ -51,10 +52,13 @@ namespace Industry_WPF.ViewModels
             Round.Go();
             RoundNumber = Round.RoundNumber;
             NotifyOfPropertyChange(() => RoundNumber);
+
+            Company = World.Company;
+
             _factoriesViewModel.Load();
             _transportOrdersViewModel.Load();
+            _productsViewModel.Load();
             _citiesViewModel.Load();
-            Company = World.Company;
         }
 
         public void ShowFactories()
@@ -73,6 +77,11 @@ namespace Industry_WPF.ViewModels
         {
             ActivateItem(_transportOrdersViewModel);
             _transportOrdersViewModel.Load();
+        }
+        public void ShowProducts()
+        {
+            ActivateItem(_productsViewModel);
+            _productsViewModel.Load();
         }
     }
 }
