@@ -47,7 +47,6 @@ namespace ModelLibrary.Models
             Tuple<int, int, int, int, int> tokey = new Tuple<int, int, int, int, int>
                 (sender.Type(), sender.Id, receiver.Type(), receiver.Id, productType.Id);
             return TransportOrders[tokey];
-
         }
         public void Go()
         {
@@ -59,6 +58,7 @@ namespace ModelLibrary.Models
                 {
                     //FewProductsToSend?.Invoke(Sender, new ProductEventArgs(Sender.Products[ProductType.Id]));
                 }
+
                 Amount = Math.Min(Capacity, productS.AmountOut);
                 productS.AmountOut -= Amount;
                 Product productIn;
@@ -72,6 +72,7 @@ namespace ModelLibrary.Models
                     productIn = new Product(ProductType, Receiver, Amount);
                     //Receiver.Products.Add(new Product(ProductType, Receiver, Amount));
                 }
+
                 double productInCost = productIn.AmountIn * productIn.ProductCost;
                 productIn.AmountIn += Amount;
                 TransportCost = TransportCostPerUnit * Amount;

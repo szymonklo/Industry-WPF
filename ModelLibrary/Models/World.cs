@@ -19,43 +19,30 @@ namespace ModelLibrary.Models
         {
             ProductType water = new ProductType(0, 1, "water", 1);
             ProductType wheat = new ProductType(1, 1, "wheat", 2);
-            
             ProductType flour = new ProductType(2, 2, "flour", 3, new List<ProductType> { wheat });
-
             ProductType bread = new ProductType(3, 3, "bread", 6, new List<ProductType> { water, flour });
             
-            List<ProductType> ProductsTypes = new List<ProductType>
-            {
-                water,
-                wheat,
-                flour,
-                bread
-            };
+            ProductType.ProductTypes.AddRange(new List<ProductType> { water, wheat, flour, bread });
 
             Factory waterSupply = new Factory("Water Supply", 100, water, 4);
             Factory cropFarm = new Factory("Crop Farm", 100, wheat, 4);
             Factory mill = new Factory("Mill", 100, flour, 3);
             Factory bakery = new Factory("Bakery", 60, bread, 2);
-            Factories.Add(waterSupply);
-            Factories.Add(cropFarm);
-            Factories.Add(mill);
-            Factories.Add(bakery);
-            
-            //temp
-            //Product.GetProduct(water, bakery).AmountIn = 400;
-            //Product.GetProduct(water, bakery).ProductPrice = 1.1;
+
+            Factories.AddRange(new List<Factory> {waterSupply, cropFarm, mill, bakery });
 
             City krakow = new City("Krakow", 80);
             City warszawa = new City("Warszawa", 100);
-            Cities.Add(krakow);
-            Cities.Add(warszawa);
+
+            Cities.AddRange(new List<City> { krakow, warszawa });
             
             foreach (City city in Cities)
             {
-                foreach (ProductType productType in ProductsTypes)
+                foreach (ProductType productType in ProductType.ProductTypes)
                 {
                     new Product(productType, city);
                 }
+                //TODO - events!
                 //city.ProductWasSold += new Write().HandleProductSold;   //event
                 ////city.ProductWasSold += Form1.OnTransactionDone;
                 //city.TransactionDone += Form1.OnTransactionDone;
@@ -68,59 +55,35 @@ namespace ModelLibrary.Models
                 factory.TransactionDone += Form1.OnTransactionDone;
             }*/
 
-            // 2020-02-23
+            //Console.WriteLine("**** Products are transported from factories ****\n");
 
-            // Products are transported from "tier n" to "tier n-1" factories
-            //2020-02-23 and alsofrom factories to cities
-            //Console.WriteLine("**** Products are transported from tier n to tier n - 1 factories ****\n");
-            
-            //for (int t = 4; t > 0; t--)
-            //{
             //TODO - method for creating transport orders and calculating capacity based on something better than DefProduction and number of receivers
-                foreach (Factory factoryS in World.Factories)//.Where(factoryS => factoryS.Tier == t))
+                foreach (Factory factoryS in World.Factories)
                 {
                     
-                    List<Facility> receivers = World.Factories/*Where(factoryR => factoryR.Tier == t - 1).*/
+                    List<Facility> receivers = World.Factories
                         .Where(factoryR => factoryR.ProductType.Components != null)
                         .Where(factoryR => factoryR.ProductType.Components.Contains(factoryS.ProductType))
                         .Cast<Facility>().ToList();
+
                     receivers.AddRange(World.Cities.Cast<Facility>().ToList());
                     int receiversNumber = receivers.Count();
-                    //receiversNumber += World.Cities.Count();
                     int capacity = factoryS.DefProduction / receiversNumber;
+
+                    //dlaczego usuniete?
                     //factoryS.AmounToSend = capacity;
 
                     foreach (Facility facilityR in receivers)
                     {
+                        //dlaczego?
                         //if (factoryR.ProductType.Components.Contains(factoryS.ProductType))
                         {
 
                             TransportOrder transportOrder = new TransportOrder(factoryS, facilityR, factoryS.ProductType, capacity);
                             //transportOrder.FewProductsToSend += Form1.OnFewProductsToSendMessage;
-                            //transportOrder.Go();
                         }
                     }
                 }
-            //}
-            //Console.WriteLine("\n");
-
-            //Products are transported from factories to cities
-            //2020-02-23 replaced by one method containing factories and cities as receivers
-            /*
-            //Console.WriteLine("**** Products are transported from factories to cities ****\n");
-            foreach (Factory factory in World.Factories)
-            {
-                foreach (City city in World.Cities)
-                {
-                    //int receiversNumber = World.Factories.Where(factoryR => factoryR.ProductType.Components.Contains(factoryS.ProductType)).Count();
-                    //receiversNumber += World.Cities.Count();
-                    int capacity = factory.AmounToSend;
-                    TransportOrder transportOrder = new TransportOrder(factory, city, factory.ProductType, capacity);
-                    //transportOrder.FewProductsToSend += Form1.OnFewProductsToSendMessage;
-                    //transportOrder.Go();
-                }
-            }
-            */
         }
     }
 }

@@ -22,10 +22,8 @@ namespace ModelLibrary.Models
             Console.WriteLine("**** Cities demand ****\n");
             foreach (City city in World.Cities)
             {
-                //city.Demand();
                 Product.Demand(city);
             }
-            Console.WriteLine("\n");
 
             //Factories produce
             Console.WriteLine("**** Factories produce ****\n");
@@ -33,71 +31,35 @@ namespace ModelLibrary.Models
             {
                 factory.Produce(factory.Product);
             }
-            Console.WriteLine("\n");
 
-            // Products are transported from "tier n" to "tier n-1" factories
-            Console.WriteLine("**** Products are transported from tier n to tier n - 1 factories ****\n");
-            /*
-            for (int t = 4; t > 0; t--)
-            {
-                foreach (Factory factoryS in World.Factories.Where(factory => factory.Tier == t))
-                {
-                    foreach (Factory factoryR in World.Factories.Where(factory => factory.Tier == t - 1))
-                    {
-                        if (factoryR.ProductType.Components.Contains(factoryS.ProductType))
-                        {
-                            TransportOrder transportOrder = TransportOrder.GetOrder(factoryS, factoryR, factoryS.ProductType);
-                            //usuniete
-                            //transportOrder.FewProductsToSend += Form1.OnFewProductsToSendMessage;
-                            transportOrder.Go();
-                        }
-                    }
-                }
-            }
-            */
-            
+            //optimize transportorders
             foreach (Factory factory in World.Factories)
             {
-                //optimize transportorders
                 Product product = factory.Product;
-                var citiesId = product.GetMostAndLeastProfitableCities();
-                TransportOrder cheapTransportOrder = TransportOrder.GetOrder(factory, World.Cities[citiesId.Item2], factory.ProductType);
-                TransportOrder expensiveTransportOrder = TransportOrder.GetOrder(factory, World.Cities[citiesId.Item1], factory.ProductType);
-                int amountChange = cheapTransportOrder.Capacity / 3;
-                cheapTransportOrder.Capacity -= amountChange;
-                expensiveTransportOrder.Capacity += amountChange;
-                //end optimize
+                TransportOrder cheapTransportOrder = TransportOrder.GetOrder(factory, World.Cities[product.GetMostAndLeastProfitableCities().Item2], factory.ProductType);
+                TransportOrder expensiveTransportOrder = TransportOrder.GetOrder(factory, World.Cities[product.GetMostAndLeastProfitableCities().Item1], factory.ProductType);
+                double amountChange = (cheapTransportOrder.Capacity + expensiveTransportOrder.Capacity) * product.GetMostAndLeastProfitableCities().Item3;
+                cheapTransportOrder.Capacity -= (int) amountChange;
+                expensiveTransportOrder.Capacity += (int) amountChange;
             }
+
             //DONE - uwzglednic rowniez transport do miast (po zmianie metody optymalizacji)
+
+            // Products are transported
+            Console.WriteLine("**** Products are transported ****\n");
             foreach (TransportOrder transportOrder in TransportOrder.TransportOrders.Values)
-                //.Where(x => x.Key.Item1 == 0).Select(x => x.Value))
             {
                 transportOrder.Go();
             }
-            Console.WriteLine("\n");
-            /*2020-02-23
-            foreach (City city in World.Cities)
-                {
-                    TransportOrder transportOrder = TransportOrder.GetOrder(factory, city, factory.ProductType);
-                    //usuniete
-                    //transportOrder.FewProductsToSend += Form1.OnFewProductsToSendMessage;
-                    transportOrder.Go();
-                }
-            }
-            Console.WriteLine("\n");
-            */
 
             //Cities consume
             Console.WriteLine("**** Cities consume ****\n");
             Product.Consume();
-            //foreach (City city in World.Cities)
-            //{
-            //    city.Consume();
-            //}
-            Console.WriteLine("\n");
 
+            //Closing the sach regiter
             World.Company.CalculateProfit();
 
+            //Ending the round
             RoundNumber++;
         }
     }

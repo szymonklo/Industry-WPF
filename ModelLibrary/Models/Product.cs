@@ -14,10 +14,9 @@ namespace ModelLibrary.Models
         public int AmountDone { get; set; }
         public double ProductPrice { get; set; }
         public double MarketPriceMod { get; set; }
-        public double ProductCost { get; set; }
         public double ProductionCost { get; set; }
+        public double ProductCost { get; set; }
         public double ProductProfit { get; set; }
-        
 
         public static Dictionary<Tuple<int, int, int>, Product> ProductD { get; private set; } = new Dictionary<Tuple<int, int, int>, Product>();
 
@@ -34,14 +33,14 @@ namespace ModelLibrary.Models
         {
             ProductionCost = productType.Group;
             AmountIn = amount;
-            Add(this, facility);
+            Add(facility);
             facility.Products.Add(this);
         }
 
-        public void Add(Product product, Facility facility)
+        private void Add(Facility facility)
         {
-            Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type(), facility.Id, product.Id);
-            ProductD.Add(pkey, product);
+            Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type(), facility.Id, Id);
+            ProductD.Add(pkey, this);
             OnPropertyChanged();
         }
 
@@ -50,7 +49,7 @@ namespace ModelLibrary.Models
             Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type(), facility.Id, productType.Id);
             return ProductD[pkey];
         }
-
+        //dlaczego nie używane
         public static Product GetProduct(int productId, Facility facility)
         {
             Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type(), facility.Id, productId);
@@ -61,11 +60,15 @@ namespace ModelLibrary.Models
             return ProductD.Where(p => p.Value == this).Select(p => p.Key).Single();
         }
 
-        public Tuple<int, int> GetMostAndLeastProfitableCities()
+        public Tuple<int, int, double> GetMostAndLeastProfitableCities()
         {
-            int idMost = ProductD.Where(product => product.Key.Item1 == 2).Where(product => product.Key.Item3 == this.Id).OrderByDescending(product => product.Value.ProductProfit).First().Key.Item2;
-            int idLeast = ProductD.Where(product => product.Key.Item1 == 2).Where(product => product.Key.Item3 == this.Id).OrderByDescending(product => product.Value.ProductProfit).Last().Key.Item2;
-            return new Tuple<int, int>(idMost, idLeast);
+            var orderedProducts = ProductD.Where(product => product.Key.Item1 == 2).Where(product => product.Key.Item3 == this.Id).OrderByDescending(product => product.Value.ProductProfit);
+            int idMost = orderedProducts.First().Key.Item2;
+            int idLeast = orderedProducts.Last().Key.Item2;
+            double difference = 0;
+            if ((orderedProducts.First().Value.ProductProfit + orderedProducts.Last().Value.ProductProfit) > 0.1)
+                difference = (orderedProducts.First().Value.ProductProfit - orderedProducts.Last().Value.ProductProfit) / (orderedProducts.First().Value.ProductProfit + orderedProducts.Last().Value.ProductProfit);
+            return new Tuple<int, int, double>(idMost, idLeast, difference);
         }
 
         public City GetCity()
@@ -85,14 +88,8 @@ namespace ModelLibrary.Models
                     case 1:
                         product.AmountOut = _defDemand * city.Population;
                         break;
-                    case 2:
-                        product.AmountOut = _defDemand * city.Population;
-                        break;
-                    case 3:
-                        product.AmountOut = _defDemand * city.Population;
-                        break;
                     default:
-                        product.AmountOut = 0;
+                        product.AmountOut = _defDemand * city.Population;
                         break;
                 }
             }
@@ -138,11 +135,12 @@ namespace ModelLibrary.Models
         public static event EventHandler ProductWasSold;
         public static event EventHandler<ProductEventArgs> TransactionDone;
 
-        public void CalculateMarketPriceMod()
+        private void CalculateMarketPriceMod()
         {
-            double p = (AmountOut - AmountIn);
-            p /= (AmountOut);
-            MarketPriceMod = p + 1;
+            if (AmountIn <= AmountOut)
+                MarketPriceMod = 2 - (double) AmountIn / AmountOut;
+            else
+                MarketPriceMod = (double) AmountOut / AmountIn;
         }
     }
 }

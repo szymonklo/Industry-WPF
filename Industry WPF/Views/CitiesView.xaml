@@ -36,6 +36,13 @@
                 <DataGridTextColumn Header="Amount To Send" Binding="{Binding Path=AmounToSend}"/>
                 <DataGridTextColumn Header="Base Cost" Binding="{Binding Path=BaseCost}"/>
             </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid AlternatingRowBackground="LightGray" CanUserAddRows="false" IsReadOnly="True"
+                  AutoGenerateColumns="True"  ItemsSource="{Binding Products}" x:Name="ProductDataGrid">
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
 
         </DataGrid>
     </Grid>
