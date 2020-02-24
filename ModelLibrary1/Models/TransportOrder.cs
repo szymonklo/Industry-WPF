@@ -13,6 +13,7 @@ namespace ModelLibrary.Models
         public Facility Receiver { get; set; }
         public ProductType ProductType { get; set; }
         public int Capacity { get; set; }// = 20;
+        public int ReceiversNumber { get; set; }// = 20;
 
         private static Dictionary<Tuple<int, int, int, int, int>, TransportOrder> _transportOrders
             = new Dictionary<Tuple<int, int, int, int, int>, TransportOrder>();
@@ -28,12 +29,13 @@ namespace ModelLibrary.Models
         //przygotować deklarację zdarzenia na podstawie powyższego delagata:
         public event FewProductsToSendDelegate FewProductsToSend;
 
-        public TransportOrder(Facility sender, Facility receiver, ProductType productType, int capacity)
+        public TransportOrder(Facility sender, Facility receiver, ProductType productType, int capacity, int receiversNumber)
         {
             Sender = sender;
             Receiver = receiver;
             ProductType = productType;
             Capacity = capacity;
+            ReceiversNumber = receiversNumber;
             Add();
         }
         public void Add()
@@ -51,6 +53,7 @@ namespace ModelLibrary.Models
         public void Go()
         {
             Product productS = Product.GetProduct(ProductType, Sender);
+            Capacity = productS.AmountOut / ReceiversNumber;
             if (productS != null && productS.AmountOut > 0)
             //Sender.Products.Contains(ProductType.Id) && Sender.Products[ProductType.Id].AmountOut > 0)
             {

@@ -17,10 +17,10 @@ namespace ModelLibrary.Models
         }
         public World()
         {
-            ProductType water = new ProductType(0, 1, "water", 1);
+            ProductType water = new ProductType(0, 1, "water", 2);
             ProductType wheat = new ProductType(1, 1, "wheat", 2);
-            ProductType flour = new ProductType(2, 2, "flour", 3, new List<ProductType> { wheat });
-            ProductType bread = new ProductType(3, 3, "bread", 6, new List<ProductType> { water, flour });
+            ProductType flour = new ProductType(2, 2, "flour", 6, new List<ProductType> { wheat });
+            ProductType bread = new ProductType(3, 3, "bread", 14, new List<ProductType> { water, flour });
             
             ProductType.ProductTypes.AddRange(new List<ProductType> { water, wheat, flour, bread });
 
@@ -79,7 +79,7 @@ namespace ModelLibrary.Models
                         //if (factoryR.ProductType.Components.Contains(factoryS.ProductType))
                         {
 
-                            TransportOrder transportOrder = new TransportOrder(factoryS, facilityR, factoryS.ProductType, capacity);
+                            TransportOrder transportOrder = new TransportOrder(factoryS, facilityR, factoryS.ProductType, capacity, receiversNumber);
                             //transportOrder.FewProductsToSend += Form1.OnFewProductsToSendMessage;
                         }
                     }

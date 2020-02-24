@@ -32,6 +32,7 @@ namespace ModelLibrary.Models
                 factory.Produce(factory.Product);
             }
 
+            /*
             //optimize transportorders
             foreach (Factory factory in World.Factories)
             {
@@ -42,6 +43,7 @@ namespace ModelLibrary.Models
                 cheapTransportOrder.Capacity -= (int) amountChange;
                 expensiveTransportOrder.Capacity += (int) amountChange;
             }
+            */
 
             //DONE - uwzglednic rowniez transport do miast (po zmianie metody optymalizacji)
 

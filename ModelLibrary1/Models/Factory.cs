@@ -12,7 +12,7 @@ namespace ModelLibrary.Models
         public byte Tier { get; set; }
         public int DefProduction { get; set; }
         public int ProductionAmount { get; set; }
-        public int BaseCost { get; set; } = 10;
+        public double BaseCost { get; set; } = 10;
         public ProductType ProductType { get; set; }
         public Product Product { get; set; }
         private static int lastId { get; set; }
@@ -50,7 +50,7 @@ namespace ModelLibrary.Models
         public void Produce(ProductType productType)
         {
             //test
-            BaseCost = 10 + Round.RoundNumber;
+            BaseCost = 10;// + 0.1 * Round.RoundNumber;
             
             if (productType.Id != Product.Id)
             {
@@ -61,7 +61,7 @@ namespace ModelLibrary.Models
             CalculateProductionAmount();
 
             //TODO - uwzglednic poprzednia runde
-            double produktsOnStockCosts = 0;
+            double produktsOnStockCosts = Product.ProductCost * Product.AmountOut;
 
             if (productType.Components == null)
                 Product.AmountDone = ProductionAmount;
@@ -72,8 +72,10 @@ namespace ModelLibrary.Models
                 foreach (ProductType component in productType.Components)
                 {
                     Product factoryComponent = Product.GetProduct(component, this);
-                    produktsOnStockCosts += factoryComponent.ProductPrice * Product.AmountDone;
+                    produktsOnStockCosts += factoryComponent.ProductCost * Product.AmountDone;
                     factoryComponent.AmountIn -= Product.AmountDone;
+                    //dodane 2020-02-24
+                    factoryComponent.AmountDone = -Product.AmountDone;
                     Console.WriteLine($"{Name} used: {Product.AmountDone} {factoryComponent.Name} (Components remained: {factoryComponent.AmountIn} {factoryComponent.Name})");
                 }
             }
@@ -81,14 +83,14 @@ namespace ModelLibrary.Models
             produktsOnStockCosts += Product.ProductionCost * Product.AmountDone + BaseCost;
             World.Company.Cost += produktsOnStockCosts;
             World.Company.Money -= produktsOnStockCosts;
-                
+
             /*//checking dividing by 0)
             if (Product.AmountOut > 0)
                 Product.ProductCost = produktsOnStockCosts / Product.AmountOut;
             else
                 Product.ProductCost = produktsOnStockCosts;*/
-
-            Product.ProductCost = produktsOnStockCosts / (Product.AmountOut > 0 ? Product.AmountOut : 1);
+            if (Product.AmountOut > 0)
+                Product.ProductCost = produktsOnStockCosts / Product.AmountOut;
 
             TransactionDone?.Invoke(this, new ProductEventArgs(Product.GetProduct(productType, this)));
             Console.WriteLine($"{Name} produced: {Product.AmountDone} {Product.Name} (On stock: {Product.AmountOut} {Product.Name})");
@@ -110,7 +112,7 @@ namespace ModelLibrary.Models
 
         private void CheckComponents()
         {
-            AmountOfAvailableComponents = 0;
+            AmountOfAvailableComponents = Int32.MaxValue;
 
             if (ProductType.Components != null)
             {
@@ -119,15 +121,14 @@ namespace ModelLibrary.Models
                     Product factoryComponent = Product.GetProduct(component, this);
                     if (factoryComponent.AmountIn > 0)
                     {
-                        if (factoryComponent.AmountIn > AmountOfAvailableComponents)
+                        if (factoryComponent.AmountIn < AmountOfAvailableComponents)
                             AmountOfAvailableComponents = factoryComponent.AmountIn;
-                        continue;
                     }
                     else
                     {
+                        AmountOfAvailableComponents = 0;
                         //activate event
                         NoComponents?.Invoke(this, new ProductEventArgs(factoryComponent));
-                        break;
                     }
                 }
             }
