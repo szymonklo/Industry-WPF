@@ -20,14 +20,14 @@ namespace ModelLibrary.Models
             
             //Cities demand
             Console.WriteLine("**** Cities demand ****\n");
-            foreach (City city in World.Cities)
+            foreach (City city in City.Cities)
             {
                 Product.Demand(city);
             }
 
             //Factories produce
             Console.WriteLine("**** Factories produce ****\n");
-            foreach (Factory factory in World.Factories)
+            foreach (Factory factory in Factory.Factories)
             {
                 factory.Produce(factory.Product);
             }

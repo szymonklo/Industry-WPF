@@ -18,11 +18,11 @@ namespace ModelLibrary.Models
         public double ProductCost { get; set; }
         public double ProductProfit { get; set; }
 
-        public static Dictionary<Tuple<int, int, int>, Product> ProductD { get; private set; } = new Dictionary<Tuple<int, int, int>, Product>();
+        public static Dictionary<Tuple<int, int, int>, Product> Products { get; set; } = new Dictionary<Tuple<int, int, int>, Product>();
 
         public static List<Product> GetAll()
         {
-            return ProductD.Values.ToList();
+            return Products.Values.ToList();
         }
 
         public Product(int id, byte group, string productName, double defPrice, List<ProductType> components)//, int amount = 0)
@@ -40,29 +40,29 @@ namespace ModelLibrary.Models
         private void Add(Facility facility)
         {
             Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type(), facility.Id, Id);
-            ProductD.Add(pkey, this);
+            Products.Add(pkey, this);
             OnPropertyChanged();
         }
 
         public static Product GetProduct(ProductType productType, Facility facility)
         {
             Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type(), facility.Id, productType.Id);
-            return ProductD[pkey];
+            return Products[pkey];
         }
         //dlaczego nie używane
         public static Product GetProduct(int productId, Facility facility)
         {
             Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type(), facility.Id, productId);
-            return ProductD[pkey];
+            return Products[pkey];
         }
         public Tuple<int, int, int> GetProductKey()
         {
-            return ProductD.Where(p => p.Value == this).Select(p => p.Key).Single();
+            return Products.Where(p => p.Value == this).Select(p => p.Key).Single();
         }
 
         public Tuple<int, int, double> GetMostAndLeastProfitableCities()
         {
-            var orderedProducts = ProductD.Where(product => product.Key.Item1 == 2).Where(product => product.Key.Item3 == this.Id).OrderByDescending(product => product.Value.ProductProfit);
+            var orderedProducts = Products.Where(product => product.Key.Item1 == 2).Where(product => product.Key.Item3 == this.Id).OrderByDescending(product => product.Value.ProductProfit);
             int idMost = orderedProducts.First().Key.Item2;
             int idLeast = orderedProducts.Last().Key.Item2;
             double difference = 0;
@@ -73,13 +73,13 @@ namespace ModelLibrary.Models
 
         public City GetCity()
         {
-            return World.Cities[GetProductKey().Item2];
+            return City.Cities[GetProductKey().Item2];
         }
 
         public static void Demand(City city)
         {
             int _defDemand = 1;
-            var what = (ProductD.Where(p => p.Key.Item1 == 2).Where(p => p.Key.Item2 == city.Id)).Select(x => x.Value).ToList();
+            var what = (Products.Where(p => p.Key.Item1 == 2).Where(p => p.Key.Item2 == city.Id)).Select(x => x.Value).ToList();
             
             foreach (Product product in what)
             {
@@ -97,7 +97,7 @@ namespace ModelLibrary.Models
 
         public static void Consume()
         {
-            foreach (Product product in ProductD.Where(p => p.Key.Item1 == 2).Select(p => p.Value))
+            foreach (Product product in Products.Where(p => p.Key.Item1 == 2).Select(p => p.Value))
                 if (true)   //warunki? demand > 0
                 {
                     product.CalculateMarketPriceMod();

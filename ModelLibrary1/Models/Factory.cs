@@ -19,6 +19,9 @@ namespace ModelLibrary.Models
         //public int AmounToSend { get; set; }
         public int AmountOfAvailableComponents { get; set; }
 
+        public static List<Factory> Factories = new List<Factory>();
+
+
         public Factory(string factoryName, int factoryDefProduction, ProductType productType, byte tier)
         {
             Name = factoryName;
@@ -60,7 +63,7 @@ namespace ModelLibrary.Models
             CheckComponents();
             CalculateProductionAmount();
 
-            //TODO - uwzglednic poprzednia runde
+            //DONE - uwzglednic poprzednia runde
             double produktsOnStockCosts = Product.ProductCost * Product.AmountOut;
 
             if (productType.Components == null)

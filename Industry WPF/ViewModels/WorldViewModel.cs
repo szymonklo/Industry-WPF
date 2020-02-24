@@ -48,9 +48,19 @@ namespace Industry_WPF.ViewModels
             _world = World.CreateNewWorld();
         }
 
-        public void SaveProductTypes()
+        public void SaveProducts()
         {
-            TextConnector.SaveProductTypesToFile();
+            TextConnector.SaveProductsToFile();
+        }
+        //public void ClearProducts()
+        //{
+        //    for (int i = 0; i < Product.Products.Count; i++)
+        //        Product.Products[i] = new Product();
+        //    Product.Products = new List<Product>();
+        //}
+        public void LoadProducts()
+        {
+            TextConnector.LoadProductsFromFile();
         }
 
         public void NextRound()

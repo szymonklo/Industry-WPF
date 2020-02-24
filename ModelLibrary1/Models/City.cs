@@ -11,7 +11,9 @@ namespace ModelLibrary.Models
         private static int lastId { get; set; }
         public new int Type { get; private set; } = 2;
 
-    public City(string name, int population)
+        public static List<City> Cities = new List<City>();
+
+        public City(string name, int population)
         {
             Name = name;
             Population = population;

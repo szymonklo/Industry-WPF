@@ -29,7 +29,7 @@ namespace Industry_WPF.ViewModels
 
         public void Load()
         {
-            Cities = new BindableCollection<City>(World.Cities);
+            Cities = new BindableCollection<City>(City.Cities);
         }
     }
 }

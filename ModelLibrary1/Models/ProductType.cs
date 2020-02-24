@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -40,6 +41,11 @@ namespace ModelLibrary.Models
             Name = productName;
             DefPrice = defPrice;
             Components = components;
+        }
+
+        public static ProductType GetProductType(int id)
+        {
+            return ProductTypes.Where(x => x.Id == id).First();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

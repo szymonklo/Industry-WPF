@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ModelLibrary.Models
@@ -17,6 +18,16 @@ namespace ModelLibrary.Models
                 return 2;
             else
                 return 0;
+        }
+
+        public static Facility GetFacility(int type, int id)
+        {
+            if (type == 1)
+                return Factory.Factories.Where(x => x.Id == id).First();
+            else if (type == 2)
+                return City.Cities.Where(x => x.Id == id).First();
+            else
+                return null;
         }
     }
 }

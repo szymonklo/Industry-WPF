@@ -8,8 +8,7 @@ namespace ModelLibrary.Models
 {
     public class World
     {
-        public static List<City> Cities = new List<City>();
-        public static List<Factory> Factories = new List<Factory>();
+        //DONE - move to classes as static properties
         public static Company Company = new Company("Noble House");
         public static World CreateNewWorld()
         {
@@ -29,14 +28,14 @@ namespace ModelLibrary.Models
             Factory mill = new Factory("Mill", 100, flour, 3);
             Factory bakery = new Factory("Bakery", 60, bread, 2);
 
-            Factories.AddRange(new List<Factory> {waterSupply, cropFarm, mill, bakery });
+            Factory.Factories.AddRange(new List<Factory> {waterSupply, cropFarm, mill, bakery });
 
             City krakow = new City("Krakow", 80);
             City warszawa = new City("Warszawa", 100);
 
-            Cities.AddRange(new List<City> { krakow, warszawa });
+            City.Cities.AddRange(new List<City> { krakow, warszawa });
             
-            foreach (City city in Cities)
+            foreach (City city in City.Cities)
             {
                 foreach (ProductType productType in ProductType.ProductTypes)
                 {
@@ -58,15 +57,15 @@ namespace ModelLibrary.Models
             //Console.WriteLine("**** Products are transported from factories ****\n");
 
             //TODO - method for creating transport orders and calculating capacity based on something better than DefProduction and number of receivers
-                foreach (Factory factoryS in World.Factories)
+                foreach (Factory factoryS in Factory.Factories)
                 {
                     
-                    List<Facility> receivers = World.Factories
+                    List<Facility> receivers = Factory.Factories
                         .Where(factoryR => factoryR.ProductType.Components != null)
                         .Where(factoryR => factoryR.ProductType.Components.Contains(factoryS.ProductType))
                         .Cast<Facility>().ToList();
 
-                    receivers.AddRange(World.Cities.Cast<Facility>().ToList());
+                    receivers.AddRange(City.Cities.Cast<Facility>().ToList());
                     int receiversNumber = receivers.Count();
                     int capacity = factoryS.DefProduction / receiversNumber;
 

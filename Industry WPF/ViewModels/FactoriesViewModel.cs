@@ -29,7 +29,7 @@ namespace Industry_WPF.ViewModels
 
         public void Load()
         {
-            Factories = new BindableCollection<Factory>(World.Factories);
+            Factories = new BindableCollection<Factory>(Factory.Factories);
         }
     }
 }
