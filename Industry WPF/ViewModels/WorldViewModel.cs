@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ModelLibrary.Models;
+using ModelLibrary.DataAccess;
 
 namespace Industry_WPF.ViewModels
 {
@@ -45,6 +46,11 @@ namespace Industry_WPF.ViewModels
         public WorldViewModel()
         {
             _world = World.CreateNewWorld();
+        }
+
+        public void SaveProductTypes()
+        {
+            TextConnector.SaveProductTypesToFile();
         }
 
         public void NextRound()

@@ -34,6 +34,9 @@
         <Button x:Name="ShowProducts" Content="Products" Grid.Column="3" Grid.Row="2"/>
 
         <ContentControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" x:Name="ActiveItem"/>
+        
+        <!--Saving-->
+        <Button x:Name="SaveProductTypes" Content="Save Product Types" Grid.Column="1" Grid.Row="5"/>
 
         <!--Company-->
         <TextBlock x:Name="Company_Name" Grid.Column="5" Grid.Row="1" Grid.RowSpan="2" FontSize="24"/>
