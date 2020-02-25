@@ -13,7 +13,7 @@ namespace ModelLibrary.DataAccess
         //ProductTypes
         public static void LoadProductTypesFromFile()
         {
-            ProductType.ProductTypes = ProductTypesFile.FullFilePath().LoadFile().ConvertToProductTypes();
+            ProductTypesFile.FullFilePath().LoadFile().ConvertToProductTypes();
         }
         public static void SaveProductTypesToFile()
         {
@@ -22,7 +22,7 @@ namespace ModelLibrary.DataAccess
         //Products
         public static void LoadProductsFromFile()
         {
-            Product.Products = ProductsFile.FullFilePath().LoadFile().ConvertToProducts();
+            ProductsFile.FullFilePath().LoadFile().ConvertToProducts();
         }
         public static void SaveProductsToFile()
         {

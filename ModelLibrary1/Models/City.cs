@@ -20,6 +20,8 @@ namespace ModelLibrary.Models
             Id = lastId;
             lastId++;
             //Type = 2;
+
+            Cities.Add(this);
         }
     }
 }

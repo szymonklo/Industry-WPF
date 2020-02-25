@@ -11,7 +11,7 @@ namespace ModelLibrary.Models
         public int Amount { get; set; }
         public Facility Sender { get; set; }
         public Facility Receiver { get; set; }
-        public ProductType ProductType { get; set; }
+        public ProductType ProductType { get; set; }    //zmienić nazwę, żeby nie było konieczności użycia this.ProductType
         public int Capacity { get; set; }// = 20;
         public int ReceiversNumber { get; set; }// = 20;
 
@@ -37,6 +37,11 @@ namespace ModelLibrary.Models
             Capacity = capacity;
             ReceiversNumber = receiversNumber;
             Add();
+        }
+
+        public TransportOrder(int senderType, int senderId, int receiverType, int receiverId, int productTypeId, int capacity, int receiversNumber)
+            : this(Facility.GetFacility(senderType, senderId), Facility.GetFacility(receiverType, receiverId), ProductType.GetProductType(productTypeId), capacity, receiversNumber)
+        {
         }
         public void Add()
         {

@@ -41,6 +41,8 @@ namespace ModelLibrary.Models
                     new Product(component, this);
                 }
             }
+
+            Factories.Add(this);
         }
 
         //przygotowanie delegata
