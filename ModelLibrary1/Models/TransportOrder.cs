@@ -46,13 +46,13 @@ namespace ModelLibrary.Models
         public void Add()
         {
             Tuple<int, int, int, int, int> tokey = new Tuple<int, int, int, int, int>
-                (Sender.Type(), Sender.Id, Receiver.Type(), Receiver.Id, ProductType.Id);
+                (Sender.Type, Sender.Id, Receiver.Type, Receiver.Id, ProductType.Id);
             TransportOrders.Add(tokey, this);
         }
         public static TransportOrder GetOrder(Facility sender, Facility receiver, ProductType productType)
         {
             Tuple<int, int, int, int, int> tokey = new Tuple<int, int, int, int, int>
-                (sender.Type(), sender.Id, receiver.Type(), receiver.Id, productType.Id);
+                (sender.Type, sender.Id, receiver.Type, receiver.Id, productType.Id);
             return TransportOrders[tokey];
         }
         public void Go()

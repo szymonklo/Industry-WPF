@@ -31,7 +31,7 @@ namespace Industry_WPF.Views
         private void createNewWorldButton_Click(object sender, RoutedEventArgs e)
         {
             //MessageBox.Show($"Creating New World - started...");
-            World world = new World();
+            //World world = new World();
 
             //MessageBox.Show($"Creating New World - finished succesfully");
             

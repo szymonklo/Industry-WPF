@@ -10,23 +10,24 @@ namespace ModelLibrary.Models
         public string Name { get; set; }
         public abstract int Id { get; set; }
         public List<Product> Products { get; set; } = new List<Product>();
-        private int _type;
-        public int Type
+        public int Type { get; set; }
+
+
+        public Facility()
         {
-            get
-            {
-                return _type;
-            }
-            set
-            {
-                if (this is Factory)
-                    _type = 1;
-                else if (this is City)
-                    _type = 2;
-                else
-                    _type = 0;
-            }
+            SetType();
         }
+
+        public void SetType()
+        {
+            if (this is Factory)
+                Type = 1;
+            else if (this is City)
+                Type = 2;
+            else
+                Type = 0;
+        }
+
 
         public static Facility GetFacility(int type, int id)
         {

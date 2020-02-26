@@ -21,19 +21,19 @@ namespace ModelLibrary.Models
             ProductType flour = new ProductType(2, 2, "flour", 6, new List<ProductType> { wheat });
             ProductType bread = new ProductType(3, 3, "bread", 14, new List<ProductType> { water, flour });
             
-            ProductType.ProductTypes.AddRange(new List<ProductType> { water, wheat, flour, bread });
+            //ProductType.ProductTypes.AddRange(new List<ProductType> { water, wheat, flour, bread });
 
             Factory waterSupply = new Factory("Water Supply", 100, water, 4);
             Factory cropFarm = new Factory("Crop Farm", 100, wheat, 4);
             Factory mill = new Factory("Mill", 100, flour, 3);
             Factory bakery = new Factory("Bakery", 60, bread, 2);
 
-            Factory.Factories.AddRange(new List<Factory> {waterSupply, cropFarm, mill, bakery });
+            //Factory.Factories.AddRange(new List<Factory> {waterSupply, cropFarm, mill, bakery });
 
             City krakow = new City("Krakow", 80);
             City warszawa = new City("Warszawa", 100);
 
-            City.Cities.AddRange(new List<City> { krakow, warszawa });
+            //City.Cities.AddRange(new List<City> { krakow, warszawa });
             
             foreach (City city in City.Cities)
             {

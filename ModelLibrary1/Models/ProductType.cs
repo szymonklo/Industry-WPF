@@ -41,8 +41,9 @@ namespace ModelLibrary.Models
             Name = productName;
             DefPrice = defPrice;
             Components = components;
-
-            ProductTypes.Add(this);
+            
+            if (!(this is Product))
+                ProductTypes.Add(this);
         }
 
         public static ProductType GetProductType(int id)
