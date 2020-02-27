@@ -59,12 +59,11 @@ namespace Industry_WPF.ViewModels
             TextConnector.SaveCompaniesToFile();
             TextConnector.SaveRoundsToFile();
         }
-        public void ClearAll()
-        {
-            World.ClearWorld();
-        }
+        
         public void LoadAll()
         {
+            World.ClearWorld();
+
             TextConnector.LoadProductTypesFromFile();
             TextConnector.LoadFactoriesFromFile();
             TextConnector.LoadCitiesFromFile();
@@ -72,12 +71,19 @@ namespace Industry_WPF.ViewModels
             TextConnector.LoadTransportOrdersFromFile();
             TextConnector.LoadCompaniesFromFile();
             TextConnector.LoadRoundFromFile();
+
+            RefreshView();
         }
 
         public void NextRound()
         {
             Round.Go();
             RoundNumber = Round.RoundNumber;
+            RefreshView();
+
+        }
+        public void RefreshView()
+        {
             NotifyOfPropertyChange(() => RoundNumber);
 
             //refreshing
@@ -88,6 +94,7 @@ namespace Industry_WPF.ViewModels
             _transportOrdersViewModel.Load();
             _productsViewModel.Load();
             _citiesViewModel.Load();
+            
         }
 
         public void ShowFactories()

@@ -22,7 +22,7 @@
                 <DataGridTextColumn Header="Tier" Binding="{Binding Path=Tier}"/>
                 <DataGridTextColumn Header="Factory Name" Binding="{Binding Path=Name}"/>
                 <DataGridTextColumn Header="Product Type" Binding="{Binding Path=ProductType.Name}"/>
-                <DataGridTextColumn Header="Prduced" Binding="{Binding Path=Product.AmountDone}"/>
+                <DataGridTextColumn Header="Produced" Binding="{Binding Path=Product.AmountDone}"/>
                 <DataGridTextColumn Header="ProductPrice" Binding="{Binding Path=Product.ProductPrice}"/>
                 <DataGridTextColumn Header="ProductCost" Binding="{Binding Path=Product.ProductCost}"/>
                 <DataGridTextColumn Header="ProductionCost" Binding="{Binding Path=Product.ProductionCost}"/>

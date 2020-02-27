@@ -37,7 +37,6 @@
         
         <!--Saving-->
         <Button x:Name="SaveAll" Content="Save All" Grid.Column="0" Grid.Row="5"/>
-        <Button x:Name="ClearAll" Content="Clear All" Grid.Column="1" Grid.Row="5"/>
         <Button x:Name="LoadAll" Content="Load All" Grid.Column="2" Grid.Row="5"/>
 
         <!--Company-->

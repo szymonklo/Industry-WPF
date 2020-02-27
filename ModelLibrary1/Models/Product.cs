@@ -42,6 +42,10 @@ namespace ModelLibrary.Models
         {
             Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type, facility.Id, Id);
             Products.Add(pkey, this);
+
+            //przypisanie produktu
+            if (facility is Factory && ((Factory)facility).ProductType.Id == this.Id)
+                ((Factory)facility).Product = this;
             OnPropertyChanged();
         }
 
