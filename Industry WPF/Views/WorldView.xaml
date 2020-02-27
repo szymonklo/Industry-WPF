@@ -27,7 +27,7 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <!--Content Control for FActories, Cities, TransportOrders etc.-->
+        <!--Content Control for Factories, Cities, TransportOrders etc.-->
         <Button x:Name="ShowFactories" Content="Factories" Grid.Column="0" Grid.Row="2"/>
         <Button x:Name="ShowCities" Content="Cities" Grid.Column="1" Grid.Row="2"/>
         <Button x:Name="ShowTransportOrders" Content="TransportOrders" Grid.Column="2" Grid.Row="2"/>
@@ -36,9 +36,9 @@
         <ContentControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" x:Name="ActiveItem"/>
         
         <!--Saving-->
-        <Button x:Name="SaveProducts" Content="Save Product" Grid.Column="0" Grid.Row="5"/>
-        <Button x:Name="ClearProducts" Content="Clear Product" Grid.Column="1" Grid.Row="5"/>
-        <Button x:Name="LoadProducts" Content="Load Product" Grid.Column="2" Grid.Row="5"/>
+        <Button x:Name="SaveAll" Content="Save All" Grid.Column="0" Grid.Row="5"/>
+        <Button x:Name="ClearAll" Content="Clear All" Grid.Column="1" Grid.Row="5"/>
+        <Button x:Name="LoadAll" Content="Load All" Grid.Column="2" Grid.Row="5"/>
 
         <!--Company-->
         <TextBlock x:Name="Company_Name" Grid.Column="5" Grid.Row="1" Grid.RowSpan="2" FontSize="24"/>

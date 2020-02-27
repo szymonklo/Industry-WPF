@@ -9,12 +9,17 @@ namespace ModelLibrary.Models
 {
     public class Round
     {
+        //public static List<Round> Rounds = new List<Round>();
         public static int RoundNumber { get; set; }
+        
         public static void Go()
         {
-            World.Company.Income = 0;
-            World.Company.Cost = 0;
-            World.Company.Profit = 0;
+            foreach (Company c in Company.Companies)
+            {
+                c.Income = 0;
+                c.Cost = 0;
+                c.Profit = 0;
+            }
 
             Console.WriteLine("Round: " + RoundNumber);
             
@@ -29,7 +34,7 @@ namespace ModelLibrary.Models
             Console.WriteLine("**** Factories produce ****\n");
             foreach (Factory factory in Factory.Factories)
             {
-                factory.Produce(factory.Product);
+                factory.Produce();
             }
 
             /*
@@ -59,7 +64,10 @@ namespace ModelLibrary.Models
             Product.Consume();
 
             //Closing the sach regiter
-            World.Company.CalculateProfit();
+            foreach (Company c in Company.Companies)
+            {
+                Company.Companies[0].CalculateProfit();
+            }
 
             //Ending the round
             RoundNumber++;

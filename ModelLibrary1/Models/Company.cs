@@ -13,10 +13,12 @@ namespace ModelLibrary.Models
         public double Income { get; set; }
         public double Cost { get; set; }
         public double Profit { get; set; }
+        public static List<Company> Companies = new List<Company>();
 
         public Company(string name)
         {
             Name = name;
+            Companies.Add(this);
         }
 
         public void CalculateProfit()

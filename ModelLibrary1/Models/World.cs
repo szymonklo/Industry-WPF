@@ -9,17 +9,31 @@ namespace ModelLibrary.Models
     public class World
     {
         //DONE - move to classes as static properties
-        public static Company Company = new Company("Noble House");
-        public static World CreateNewWorld()
+        //public Company Company { get; set; }
+
+        //public static World CreateNewWorld()
+        //{
+        //    return new World();
+        //}
+
+        public static void ClearWorld()
         {
-            return new World();
+            ProductType.ProductTypes.Clear();
+            Factory.Factories.Clear();
+            City.Cities.Clear();
+            Product.Products.Clear();
+            TransportOrder.TransportOrders.Clear();
+            Company.Companies.Clear();
+            Round.RoundNumber = 0;
         }
-        public World()
+        public static void CreateNewWorld()
         {
-            ProductType water = new ProductType(0, 1, "water", 2);
-            ProductType wheat = new ProductType(1, 1, "wheat", 2);
-            ProductType flour = new ProductType(2, 2, "flour", 6, new List<ProductType> { wheat });
-            ProductType bread = new ProductType(3, 3, "bread", 14, new List<ProductType> { water, flour });
+            new Company("Noble House");
+            
+            ProductType water = new ProductType(1, "water", 2);
+            ProductType wheat = new ProductType(1, "wheat", 2);
+            ProductType flour = new ProductType(2, "flour", 6, new List<ProductType> { wheat });
+            ProductType bread = new ProductType(3, "bread", 14, new List<ProductType> { water, flour });
             
             //ProductType.ProductTypes.AddRange(new List<ProductType> { water, wheat, flour, bread });
 

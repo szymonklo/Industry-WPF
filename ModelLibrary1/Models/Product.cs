@@ -25,12 +25,13 @@ namespace ModelLibrary.Models
             return Products.Values.ToList();
         }
 
-        public Product(int id, byte group, string productName, double defPrice, List<ProductType> components)//, int amount = 0)
-            : base(id, group, productName, defPrice, components) { }
+        public Product(byte group, string productName, double defPrice, List<ProductType> components)//, int amount = 0)
+            : base(group, productName, defPrice, components) { }
 
         public Product(ProductType productType, Facility facility, int amount = 0)
-            : this(productType.Id, productType.Group, productType.Name, productType.DefPrice, productType.Components)
+            : this(productType.Group, productType.Name, productType.DefPrice, productType.Components)
         {
+            Id = productType.Id;
             ProductionCost = productType.Group;
             AmountIn = amount;
             Add(facility);
@@ -108,8 +109,8 @@ namespace ModelLibrary.Models
                     product.ProductProfit = product.ProductPrice - product.ProductCost;
 
                     double income = product.AmountDone * product.ProductPrice;
-                    World.Company.Income += income;
-                    World.Company.Money += income;
+                    Company.Companies[0].Income += income;
+                    Company.Companies[0].Money += income;
                     double cost = product.AmountDone * product.ProductCost;
                     double profit = income - cost;
                     if (product.AmountDone > 0)

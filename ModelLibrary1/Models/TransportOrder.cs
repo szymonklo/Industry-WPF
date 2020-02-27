@@ -85,8 +85,8 @@ namespace ModelLibrary.Models
                 productIn.AmountIn += Amount;
                 TransportCost = TransportCostPerUnit * Amount;
                 productInCost += Amount * productS.ProductCost + TransportCost;
-                World.Company.Cost += TransportCost;
-                World.Company.Money -= TransportCost;
+                Company.Companies[0].Cost += TransportCost;
+                Company.Companies[0].Money -= TransportCost;
                 if (productIn.AmountIn > 0)
                     productIn.ProductCost = productInCost / productIn.AmountIn;
 

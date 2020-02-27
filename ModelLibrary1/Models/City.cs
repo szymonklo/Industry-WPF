@@ -23,5 +23,10 @@ namespace ModelLibrary.Models
 
             Cities.Add(this);
         }
+
+        public static void ResetId()
+        {
+            lastId = 0;
+        }
     }
 }

@@ -32,17 +32,16 @@ namespace ModelLibrary.Models
             lastId++;
             //Type = 1;
 
-            Product = new Product(productType, this);
+            //test
             //Product.Add(Product, this);
-            if (productType.Components != null)
-            {
-                foreach (ProductType component in productType.Components)
-                {
-                    new Product(component, this);
-                }
-            }
+            
 
             Factories.Add(this);
+        }
+
+        public static void ResetId()
+        {
+            lastId = 0;
         }
 
         //przygotowanie delegata
@@ -52,14 +51,25 @@ namespace ModelLibrary.Models
         public event NoComponentsDelegate NoComponents;
         public event TransactionDoneDelegate TransactionDone;
 
-        public void Produce(ProductType productType)
+        public void Produce()
         {
             //test
             BaseCost = 10;// + 0.1 * Round.RoundNumber;
-            
-            if (productType.Id != Product.Id)
+
+            Tuple<int, int, int> key = new Tuple<int, int, int>(Type, Id, ProductType.Id);
+            if (!(Product.Products.ContainsKey(key)))
+                Product = new Product(ProductType, this);
+            else
+                Product = Product.GetProduct(ProductType, this);
+
+            if (ProductType.Components != null)
             {
-                Product = Product.GetProduct(productType, this);
+                foreach (ProductType component in ProductType.Components)
+                {
+                    Tuple<int, int, int> ckey = new Tuple<int, int, int>(Type, Id, component.Id);
+                    if (!(Product.Products.ContainsKey(ckey)))
+                        new Product(component, this);
+                }
             }
 
             CheckComponents();
@@ -68,13 +78,13 @@ namespace ModelLibrary.Models
             //DONE - uwzglednic poprzednia runde
             double produktsOnStockCosts = Product.ProductCost * Product.AmountOut;
 
-            if (productType.Components == null)
+            if (ProductType.Components == null)
                 Product.AmountDone = ProductionAmount;
             else if (AmountOfAvailableComponents > 0)
             {
                 Product.AmountDone = Math.Min(ProductionAmount, AmountOfAvailableComponents);
 
-                foreach (ProductType component in productType.Components)
+                foreach (ProductType component in ProductType.Components)
                 {
                     Product factoryComponent = Product.GetProduct(component, this);
                     produktsOnStockCosts += factoryComponent.ProductCost * Product.AmountDone;
@@ -86,8 +96,8 @@ namespace ModelLibrary.Models
             }
             Product.AmountOut += Product.AmountDone;
             produktsOnStockCosts += Product.ProductionCost * Product.AmountDone + BaseCost;
-            World.Company.Cost += produktsOnStockCosts;
-            World.Company.Money -= produktsOnStockCosts;
+            Company.Companies[0].Cost += produktsOnStockCosts;
+            Company.Companies[0].Money -= produktsOnStockCosts;
 
             /*//checking dividing by 0)
             if (Product.AmountOut > 0)
@@ -97,7 +107,7 @@ namespace ModelLibrary.Models
             if (Product.AmountOut > 0)
                 Product.ProductCost = produktsOnStockCosts / Product.AmountOut;
 
-            TransactionDone?.Invoke(this, new ProductEventArgs(Product.GetProduct(productType, this)));
+            TransactionDone?.Invoke(this, new ProductEventArgs(Product.GetProduct(ProductType, this)));
             Console.WriteLine($"{Name} produced: {Product.AmountDone} {Product.Name} (On stock: {Product.AmountOut} {Product.Name})");
             Console.WriteLine($"{Product.Name} cost is {Product.ProductCost:c} per 1 pc.");
         }

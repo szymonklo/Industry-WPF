@@ -27,6 +27,7 @@ namespace ModelLibrary.DataAccess
         //ProductTypes
         public static void ConvertToProductTypes (this List<string> lines)
         {
+            ProductType.ResetId();
             foreach (string line in lines)
             {
                 string[] columns = line.Split(';');
@@ -35,19 +36,35 @@ namespace ModelLibrary.DataAccess
                 byte group = byte.Parse(columns[1]);
                 string name = columns[2];
                 double defPrice = double.Parse(columns[3]);
-                double defCost = double.Parse(columns[3]);
+                double defCost = double.Parse(columns[4]);
 
-                ProductType productType = new ProductType(id, group, name, defPrice);
+                ProductType productType = new ProductType(group, name, defPrice);
                 productType.DefCost = defCost;
+
+                List<ProductType> components = new List<ProductType>();
+                string[] list = columns[5].Split('|');
+                foreach (string c in list)
+                {
+                    if (c.Length > 0)
+                        productType.Components.Add(ProductType.GetProductType(int.Parse(c)));
+                }
             }
         }
-        public static void SaveToProductTypeFile (this List<ProductType> productTypes, string fileName)
+        public static void SaveToProductTypesFile (this List<ProductType> productTypes, string fileName)
         {
             List<string> lines = new List<string>();
 
-            foreach (ProductType p in productTypes)
+            foreach (ProductType p in productTypes.OrderBy(x => x.Id))
             {
-                lines.Add($"{p.Id};{p.Group};{p.Name};{p.DefPrice};{p.DefCost}");
+                StringBuilder components = new StringBuilder();
+
+                if (p.Components != null)
+                {
+                    foreach (ProductType c in p.Components)
+                        components.Append(c.Id).Append('|');
+                    components.Remove(components.Length-1, 1);
+                }
+                lines.Add($"{p.Id};{p.Group};{p.Name};{p.DefPrice};{p.DefCost};{components.ToString()}");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
@@ -76,7 +93,7 @@ namespace ModelLibrary.DataAccess
                 product.ProductProfit = double.Parse(columns[10]);
             }
         }
-        public static void SaveToProductFile(this Dictionary<Tuple<int, int, int>, Product> products, string fileName)
+        public static void SaveToProductsFile(this Dictionary<Tuple<int, int, int>, Product> products, string fileName)
         {
             List<string> lines = new List<string>();
 
@@ -93,6 +110,7 @@ namespace ModelLibrary.DataAccess
         //Factories
         public static void ConvertToFactories(this List<string> lines)
         {
+            Factory.ResetId();
             foreach (string line in lines)
             {
                 string[] columns = line.Split(';');
@@ -110,11 +128,11 @@ namespace ModelLibrary.DataAccess
                 factory.AmountOfAvailableComponents = int.Parse(columns[7]);
             }
         }
-        public static void SaveToFactoryFile(this List<Factory> factories, string fileName)
+        public static void SaveToFactoriesFile(this List<Factory> factories, string fileName)
         {
             List<string> lines = new List<string>();
 
-            foreach (Factory f in factories)
+            foreach (Factory f in factories.OrderBy(x => x.Id))
             {
                 lines.Add($"{f.Id};{f.Tier};{f.Name};{f.ProductType.Id};{f.DefProduction};{f.BaseCost}" +
                     $";{f.ProductionAmount};{f.AmountOfAvailableComponents}");
@@ -126,6 +144,7 @@ namespace ModelLibrary.DataAccess
         //Cities
         public static void ConvertToCities(this List<string> lines)
         {
+            City.ResetId();
             foreach (string line in lines)
             {
                 string[] columns = line.Split(';');
@@ -137,11 +156,11 @@ namespace ModelLibrary.DataAccess
                 City city = new City(name, population);
             }
         }
-        public static void SaveToCityFile(this List<City> cities, string fileName)
+        public static void SaveToCitiesFile(this List<City> cities, string fileName)
         {
             List<string> lines = new List<string>();
 
-            foreach (City c in cities)
+            foreach (City c in cities.OrderBy(x => x.Id))
             {
                 lines.Add($"{c.Id};{c.Name};{c.Population}");
             }
@@ -171,7 +190,7 @@ namespace ModelLibrary.DataAccess
                 transportOrder.TransportCostPerUnit = int.Parse(columns[9]);
             }
         }
-        public static void SaveToTransportOrderFile(this Dictionary<Tuple<int, int, int, int, int>, TransportOrder> transportOrders, string fileName)
+        public static void SaveToTransportOrdersFile(this Dictionary<Tuple<int, int, int, int, int>, TransportOrder> transportOrders, string fileName)
         {
             List<string> lines = new List<string>();
 
@@ -186,7 +205,7 @@ namespace ModelLibrary.DataAccess
         }
 
         //Company
-        public static void ConvertToCompany(this List<string> lines)
+        public static void ConvertToCompanies(this List<string> lines)
         {
             foreach (string line in lines)
             {
@@ -196,23 +215,26 @@ namespace ModelLibrary.DataAccess
 
                 Company company = new Company(name);
 
-                company.Money = int.Parse(columns[1]);
-                company.Income = int.Parse(columns[2]);
-                company.Cost = int.Parse(columns[3]);
-                company.Profit = int.Parse(columns[4]);
+                company.Money = double.Parse(columns[1]);
+                company.Income = double.Parse(columns[2]);
+                company.Cost = double.Parse(columns[3]);
+                company.Profit = double.Parse(columns[4]);
             }
         }
-        public static void SaveToCompanyFile(this Company c, string fileName)
+        public static void SaveToCompaniesFile(this List<Company> companies, string fileName)
         {
             List<string> lines = new List<string>();
 
-            lines.Add($"{c.Name};{c.Money};{c.Income};{c.Cost};{c.Profit}");
+            foreach (Company c in companies)
+            {
+                lines.Add($"{c.Name};{c.Money};{c.Income};{c.Cost};{c.Profit}");
+            }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
 
         //Round
-        public static void ConvertToRound(this List<string> lines)
+        public static void ConvertToRounds(this List<string> lines)
         {
             foreach (string line in lines)
             {
@@ -223,7 +245,7 @@ namespace ModelLibrary.DataAccess
                 Round.RoundNumber = int.Parse(columns[0]);
             }
         }
-        public static void SaveToRoundFile(this Round r, string fileName)
+        public static void SaveToRoundsFile(string fileName)
         {
             List<string> lines = new List<string>();
 
@@ -233,5 +255,6 @@ namespace ModelLibrary.DataAccess
         }
 
         //TODO - listy w klasach: dla klasy lista statyczna zapisywana do csv jako lista ID
+        //TODO - KLASY STATYCZNE!
     }
 }
