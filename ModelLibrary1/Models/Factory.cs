@@ -79,6 +79,7 @@ namespace ModelLibrary.Models
 
             //DONE - uwzglednic poprzednia runde
             double produktsOnStockCosts = Product.ProductCost * Product.AmountOut;
+            Product.Cost = 0;
 
             if (ProductType.Components == null)
                 Product.AmountDone = ProductionAmount;
@@ -89,7 +90,8 @@ namespace ModelLibrary.Models
                 foreach (ProductType component in ProductType.Components)
                 {
                     Product factoryComponent = Product.GetProduct(component, this);
-                    produktsOnStockCosts += factoryComponent.ProductCost * Product.AmountDone;
+                    Product.Cost += factoryComponent.ProductCost * Product.AmountDone;
+                    produktsOnStockCosts = +Product.Cost;
                     factoryComponent.AmountIn -= Product.AmountDone;
                     //dodane 2020-02-24
                     factoryComponent.AmountDone = -Product.AmountDone;
@@ -97,9 +99,11 @@ namespace ModelLibrary.Models
                 }
             }
             Product.AmountOut += Product.AmountDone;
+            Product.Cost += (Product.ProductionCost * Product.AmountDone + BaseCost);
             produktsOnStockCosts += Product.ProductionCost * Product.AmountDone + BaseCost;
-            Company.Companies[0].Cost += produktsOnStockCosts;
-            Company.Companies[0].Money -= produktsOnStockCosts;
+            Company.Companies[0].Cost += Product.Cost;
+            Company.Companies[0].Money -= Product.Cost;
+            //Product.Profit = -produktsOnStockCosts;
 
             /*//checking dividing by 0)
             if (Product.AmountOut > 0)

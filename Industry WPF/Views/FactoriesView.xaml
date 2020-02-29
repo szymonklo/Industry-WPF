@@ -13,10 +13,11 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <DataGrid AlternatingRowBackground="LightGray" CanUserAddRows="false" IsReadOnly="True"
-                  AutoGenerateColumns="False" ItemsSource="{Binding Factories}" x:Name="FactoriesDataGrid">
+                  AutoGenerateColumns="False" ItemsSource="{Binding Factories}" x:Name="FactoriesDataGrid" SelectedItem="{Binding SelectedFactory}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Tier" Binding="{Binding Path=Tier}"/>
@@ -52,5 +53,6 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
+        <Button x:Name="ShowFactory" Content="Show Factory Details" Grid.Row="1"/>
     </Grid>
 </UserControl>

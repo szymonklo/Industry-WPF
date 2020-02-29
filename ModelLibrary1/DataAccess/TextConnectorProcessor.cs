@@ -91,6 +91,7 @@ namespace ModelLibrary.DataAccess
                 product.ProductionCost = double.Parse(columns[8]);
                 product.ProductCost = double.Parse(columns[9]);
                 product.ProductProfit = double.Parse(columns[10]);
+                product.FacilityName = columns[11];
             }
         }
         public static void SaveToProductsFile(this Dictionary<Tuple<int, int, int>, Product> products, string fileName)
@@ -101,7 +102,7 @@ namespace ModelLibrary.DataAccess
             {
                 Product p = products[t];
                 lines.Add($"{t.Item1};{t.Item2};{t.Item3};{p.AmountIn};{p.AmountOut};{p.AmountDone}" +
-                    $";{p.ProductPrice};{p.MarketPriceMod};{p.ProductionCost};{p.ProductCost};{p.ProductProfit}");
+                    $";{p.ProductPrice};{p.MarketPriceMod};{p.ProductionCost};{p.ProductCost};{p.ProductProfit};{p.FacilityName}");
             }
 
             File.WriteAllLines(fileName.FullFilePath(), lines);

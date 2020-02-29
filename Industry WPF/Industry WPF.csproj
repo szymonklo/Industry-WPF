@@ -71,6 +71,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="ViewModels\CitiesViewModel.cs" />
     <Compile Include="ViewModels\FactoriesViewModel.cs" />
+    <Compile Include="ViewModels\FactoryViewModel.cs" />
     <Compile Include="ViewModels\ProductsViewModel.cs" />
     <Compile Include="ViewModels\TransportOrdersViewModel.cs" />
     <Compile Include="ViewModels\WorldViewModel.cs" />
@@ -79,6 +80,9 @@
     </Compile>
     <Compile Include="Views\FactoriesView.xaml.cs">
       <DependentUpon>FactoriesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FactoryView.xaml.cs">
+      <DependentUpon>FactoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductsView.xaml.cs">
       <DependentUpon>ProductsView.xaml</DependentUpon>
@@ -98,6 +102,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FactoriesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FactoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

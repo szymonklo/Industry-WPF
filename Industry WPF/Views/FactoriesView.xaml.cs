@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using ModelLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +26,14 @@ namespace Industry_WPF.Views
         {
             InitializeComponent();
         }
+
+        //public void ShowFactory_Click()
+        //{
+        //    //var f = new FactoryViewModel(SelectedFactory);
+        //    //Items.Add(f);
+        //    //ActivateItem(f);
+        //    Industry_WPF.Views.FactoryView factoryView = new Industry_WPF.Views.FactoryView();
+        //    //factoryView
+        //}
     }
 }

@@ -17,11 +17,16 @@ namespace ModelLibrary.Models
         public double ProductionCost { get; set; }
         public double ProductCost { get; set; }
         public double ProductProfit { get; set; }
+        public string FacilityName { get; set; }
+        public double Income { get; set; }
+        public double Cost { get; set; }
+        public double Profit { get; set; }
 
         public static Dictionary<Tuple<int, int, int>, Product> Products { get; set; } = new Dictionary<Tuple<int, int, int>, Product>();
 
         public static List<Product> GetAll()
         {
+            //var p = Products.Select(x => Facility.GetFacility(x.Key.Item1, x.Key.Item2));
             return Products.Values.ToList();
         }
 
@@ -40,6 +45,7 @@ namespace ModelLibrary.Models
 
         private void Add(Facility facility)
         {
+            FacilityName = facility.Name;
             Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type, facility.Id, Id);
             Products.Add(pkey, this);
 
@@ -112,13 +118,13 @@ namespace ModelLibrary.Models
                     product.AmountIn -= product.AmountDone;
                     product.ProductProfit = product.ProductPrice - product.ProductCost;
 
-                    double income = product.AmountDone * product.ProductPrice;
-                    Company.Companies[0].Income += income;
-                    Company.Companies[0].Money += income;
-                    double cost = product.AmountDone * product.ProductCost;
-                    double profit = income - cost;
+                    product.Income = product.AmountDone * product.ProductPrice;
+                    Company.Companies[0].Income += product.Income;
+                    Company.Companies[0].Money += product.Income;
+                    product.Cost = product.AmountDone * product.ProductCost;
+                    product.Profit = product.Income - product.Cost;
                     if (product.AmountDone > 0)
-                        product.ProductProfit = profit / product.AmountDone;
+                        product.ProductProfit = product.Profit / product.AmountDone;
 
                     //activate event
                     ProductWasSold?.Invoke(product.GetCity(), EventArgs.Empty);
@@ -127,8 +133,8 @@ namespace ModelLibrary.Models
                     Console.WriteLine($"{product.GetCity().Name} consumed {product.AmountDone} {product.Name}");
                     Console.WriteLine($"{product.GetCity().Name} still demands {product.AmountOut} {product.Name}");
                     Console.WriteLine($"{product.GetCity().Name} stil has {product.AmountIn} {product.Name}");
-                    Console.WriteLine($"{product.GetCity().Name} paid {income:c} ({product.ProductPrice:c} per 1 pc)");
-                    Console.WriteLine($"Company profit is {profit:c} ({product.ProductProfit:c} per 1 pc\n");
+                    Console.WriteLine($"{product.GetCity().Name} paid {product.Income:c} ({product.ProductPrice:c} per 1 pc)");
+                    Console.WriteLine($"Company profit is {product.Profit:c} ({product.ProductProfit:c} per 1 pc\n");
                 }
         }
 
