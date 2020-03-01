@@ -10,25 +10,123 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150*"/>
-            <ColumnDefinition Width="150*"/>
-            <ColumnDefinition Width="150*"/>
-            <ColumnDefinition Width="150*"/>
-            <ColumnDefinition Width="32*"/>
-            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <!-- Title Bar -->
-        <TextBlock x:Name="Name" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" FontSize="24" Text=" Factory: {Binding Name}"/>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <TextBlock Text="Factory: " FontSize="24"/>
+            <TextBox x:Name="FactoryName" FontSize="24"/>
+            <TextBlock x:Name="FactoryName2" Text="{Binding FactoryName}"  FontSize="24"/>
+        </StackPanel>
+        
+        
+        
+        <!-- Material -->
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Components -->
+            <GroupBox Header="Components" Grid.Column="0" Grid.Row="0">
+                <ItemsControl Grid.Column="0" Grid.Row="0" x:Name="Components" ItemsSource="{Binding Components}" HorizontalAlignment="Center">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="20"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="20" Background="White" CornerRadius="7" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="35"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" />
+
+                                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Brown" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
+                                        <TextBlock Text="{Binding AmountIn}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="DarkOrange" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
+                                        <TextBlock Text="{Binding AmountDone}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    </Border>
+                                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="GreenYellow" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
+                                        <TextBlock Text="{Binding AmountOut}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+            <!-- Products -->
+            <GroupBox Header="Products" Grid.Column="0" Grid.Row="1">
+                <ItemsControl x:Name="Product" ItemsSource="{Binding Products}" HorizontalAlignment="Center">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="20"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="Black" Margin="20" Background="White" CornerRadius="7" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="35"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" />
+
+                                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Brown" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
+                                    <TextBlock Text="{Binding AmountIn}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Row="1" Grid.Column="0" BorderBrush="DarkOrange" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
+                                    <TextBlock Text="{Binding AmountDone}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                                <Border Grid.Row="2" Grid.Column="0" BorderBrush="GreenYellow" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
+                                    <TextBlock Text="{Binding AmountOut}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </GroupBox>
+        </Grid>
+
+        <!-- Components v2-->
+        <DataGrid Grid.Row="2" Grid.Column="0" Background="Transparent" RowBackground="Transparent"
+                  ItemsSource="{Binding Components}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="AmountIn" Binding="{Binding Name}"/>
+            </DataGrid.Columns>
+            
+        </DataGrid>
 
         <!--Content Control for Factories, Cities, TransportOrders etc.--><!--
         <Button x:Name="ShowFactories" Content="Factories" Grid.Column="0" Grid.Row="2"/>

@@ -13,7 +13,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <DataGrid AlternatingRowBackground="LightGray" CanUserAddRows="false" IsReadOnly="True"
@@ -53,6 +54,6 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
-        <Button x:Name="ShowFactory" Content="Show Factory Details" Grid.Row="1"/>
+        <Button x:Name="ShowFactory" Content="Show Factory Details" Grid.Row="2"/>
     </Grid>
 </UserControl>

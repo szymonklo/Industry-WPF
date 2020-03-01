@@ -21,6 +21,8 @@ namespace Industry_WPF
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             DisplayRootViewFor<WorldViewModel>();
+
+            //DisplayRootViewFor<ShellViewModel>();
         }
     }
 }

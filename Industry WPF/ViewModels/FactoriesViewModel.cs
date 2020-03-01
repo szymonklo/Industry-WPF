@@ -14,6 +14,8 @@ namespace Industry_WPF.ViewModels
         private Factory _selectedFactory;
 
         private BindableCollection<FactoryViewModel> Items = new BindableCollection<FactoryViewModel>();
+
+        public FactoryViewModel FactoryViewModel;
         public Factory SelectedFactory
         {
             get { return _selectedFactory; }
@@ -42,14 +44,17 @@ namespace Industry_WPF.ViewModels
         public void Load()
         {
             Factories = new BindableCollection<Factory>(Factory.Factories);
+            FactoryViewModel?.Load();
         }
 
         public void ShowFactory()
         {
+            if (SelectedFactory is null)
+                return;
             var conductor = this.Parent as IConductor;
-            var f = new FactoryViewModel(SelectedFactory);
-
-            conductor.ActivateItem(f);
+            FactoryViewModel = new FactoryViewModel(SelectedFactory);
+            
+            conductor.ActivateItem(FactoryViewModel);
             
             //var f = new FactoryViewModel(SelectedFactory);
             //Items.Add(f);

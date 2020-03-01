@@ -8,16 +8,58 @@ using System.Threading.Tasks;
 
 namespace Industry_WPF.ViewModels
 {
-    class FactoryViewModel
+    class FactoryViewModel : Screen, INotifyPropertyChangedEx
     {
-        private string _name;
-        private string Name
+        private Factory _factory;
+        public Factory Factory
         {
-            get { return _name; }
+            get { return _factory; }
             set
             {
-                _name = value;
-                //NotifyOfPropertyChange(() => Name);
+                _factory = value;
+                NotifyOfPropertyChange(() => Factory);
+            }
+        }
+
+        private string _factoryName;
+        public string FactoryName
+        {
+            get { return _factoryName; }
+            set
+            {
+                _factoryName = value;
+                NotifyOfPropertyChange(() => FactoryName);
+            }
+        }
+        private BindableCollection<Product> _components;
+        public BindableCollection<Product> Components
+        {
+            get { return _components; }
+            set
+            {
+                _components = value;
+                NotifyOfPropertyChange(() => Components);
+            }
+        }
+
+        private BindableCollection<Product> _products;
+        public BindableCollection<Product> Products
+        {
+            get { return _products; }
+            set
+            {
+                _products = value;
+                NotifyOfPropertyChange(() => Products);
+            }
+        }
+        private Product _product;
+        public Product Product
+        {
+            get { return _product; }
+            set
+            {
+                _product = value;
+                NotifyOfPropertyChange(() => Product);
             }
         }
 
@@ -27,7 +69,17 @@ namespace Industry_WPF.ViewModels
         }
         public FactoryViewModel(Factory factory)
         {
-            Name = factory.Name;
+            Factory = factory;
+            FactoryName = factory.Name;
+            Components = new BindableCollection<Product>(factory.Components);
+            Products = new BindableCollection<Product>(Factory.Products);
+        }
+
+        public void Load()
+        {
+            FactoryName = Factory.Name;
+            Components = new BindableCollection<Product>(Factory.Components);
+            Products = new BindableCollection<Product>(Factory.Products);
         }
     }
 }

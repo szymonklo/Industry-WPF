@@ -1,6 +1,4 @@
-﻿using Caliburn.Micro;
-using ModelLibrary.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,22 +16,13 @@ using System.Windows.Shapes;
 namespace Industry_WPF.Views
 {
     /// <summary>
-    /// Interaction logic for FactoriesView.xaml
+    /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class FactoriesView : UserControl
+    public partial class ShellView : NavigationWindow
     {
-        public FactoriesView()
+        public ShellView()
         {
             InitializeComponent();
-        }
-
-        public void ShowFactory_Click()
-        {
-            //var f = new FactoryViewModel(SelectedFactory);
-            //Items.Add(f);
-            //ActivateItem(f);
-            //FactoryView = new Industry_WPF.Views.FactoryView();
-            //factoryView
         }
     }
 }

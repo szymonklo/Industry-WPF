@@ -17,6 +17,7 @@ namespace ModelLibrary.Models
         public double BaseCost { get; set; } = 10;
         public ProductType ProductType { get; set; }
         public Product Product { get; set; }
+        public List<Product> Components { get; set; } = new List<Product>();
         private static int lastId { get; set; }
         //public int AmounToSend { get; set; }
         public int AmountOfAvailableComponents { get; set; }
@@ -64,13 +65,15 @@ namespace ModelLibrary.Models
             else
                 Product = Product.GetProduct(ProductType, this);
 
+            //Products.Add(Product);
+
             if (ProductType.Components != null)
             {
                 foreach (ProductType component in ProductType.Components)
                 {
                     Tuple<int, int, int> ckey = new Tuple<int, int, int>(Type, Id, component.Id);
                     if (!(Product.Products.ContainsKey(ckey)))
-                        new Product(component, this);
+                        Components.Add(new Product(component, this));
                 }
             }
 

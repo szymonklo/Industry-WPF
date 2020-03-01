@@ -40,7 +40,6 @@ namespace ModelLibrary.Models
             ProductionCost = productType.Group;
             AmountIn = amount;
             Add(facility);
-            facility.Products.Add(this);
         }
 
         private void Add(Facility facility)
@@ -51,7 +50,10 @@ namespace ModelLibrary.Models
 
             //przypisanie produktu
             if (facility is Factory && ((Factory)facility).ProductType.Id == this.Id)
+            {
                 ((Factory)facility).Product = this;
+                facility.Products.Add(this);
+            }
             OnPropertyChanged();
         }
 
