@@ -10,7 +10,7 @@ namespace ModelLibrary.Models
         public string Name { get; set; }
         public abstract int Id { get; set; }
         public List<Product> Products { get; set; } = new List<Product>();
-        public int Type { get; set; }
+        public int FacilityType { get; set; }
 
 
         public Facility()
@@ -22,11 +22,11 @@ namespace ModelLibrary.Models
         public void SetType()
         {
             if (this is Factory)
-                Type = 1;
+                FacilityType = 1;
             else if (this is City)
-                Type = 2;
+                FacilityType = 2;
             else
-                Type = 0;
+                FacilityType = 0;
         }
 
 

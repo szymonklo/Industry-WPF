@@ -198,7 +198,7 @@ namespace ModelLibrary.DataAccess
             foreach (Tuple<int, int, int, int, int> k in transportOrders.Keys)
             {
                 TransportOrder t = transportOrders[k];
-                lines.Add($"{t.Sender.Type};{t.Sender.Id};{t.Receiver.Type};{t.Receiver.Id};{t.ProductType.Id};{t.Capacity}" +
+                lines.Add($"{t.Sender.FacilityType};{t.Sender.Id};{t.Receiver.FacilityType};{t.Receiver.Id};{t.ProductType.Id};{t.Capacity}" +
                     $";{t.ReceiversNumber};{t.Amount};{t.TransportCost};{t.TransportCostPerUnit}");
             }
 

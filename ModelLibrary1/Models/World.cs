@@ -19,6 +19,7 @@ namespace ModelLibrary.Models
         public static void ClearWorld()
         {
             ProductType.ProductTypes.Clear();
+            FactoryType.FactoryTypes.Clear();
             Factory.Factories.Clear();
             City.Cities.Clear();
             Product.Products.Clear();
@@ -32,15 +33,25 @@ namespace ModelLibrary.Models
             
             ProductType water = new ProductType(1, "water", 2);
             ProductType wheat = new ProductType(1, "wheat", 2);
-            ProductType flour = new ProductType(2, "flour", 6, new List<ProductType> { wheat });
-            ProductType bread = new ProductType(3, "bread", 14, new List<ProductType> { water, flour });
-            
+            ProductType rye = new ProductType(1, "rye", 3);
+            ProductType wheatFlour = new ProductType(2, "flour", 6, new List<ProductType> { wheat });
+            ProductType ryeFlour = new ProductType(2, "flour", 7, new List<ProductType> { rye });
+            ProductType wheatBread = new ProductType(3, "bread", 14, new List<ProductType> { water, wheatFlour });
+            ProductType ryeBread = new ProductType(3, "bread", 16, new List<ProductType> { water, ryeFlour });
+            ProductType mixedBread = new ProductType(3, "bread", 15, new List<ProductType> { water, wheatFlour, ryeFlour});
+
             //ProductType.ProductTypes.AddRange(new List<ProductType> { water, wheat, flour, bread });
 
-            Factory waterSupply = new Factory("Water Supply", 100, water, 4);
-            Factory cropFarm = new Factory("Crop Farm", 100, wheat, 4);
-            Factory mill = new Factory("Mill", 100, flour, 3);
-            Factory bakery = new Factory("Bakery", 60, bread, 2);
+            FactoryType farm = new FactoryType("Farm", 4, 100, 10, 2000, new List<ProductType> { wheat, rye });
+            FactoryType gather = new FactoryType("Gather", 4, 100, 10, 2000, new List<ProductType> { water });
+            FactoryType mill = new FactoryType("Mill", 3, 100, 10, 3000, new List<ProductType> { wheatFlour, ryeFlour });
+            FactoryType foodFactory = new FactoryType("Food Factory", 2, 100, 10, 5000, new List<ProductType> { wheatBread, ryeBread, mixedBread });
+
+
+            Factory waterSupply = new Factory(gather);
+            Factory cropFarm = new Factory(farm, rye);
+            Factory windMill = new Factory(mill, ryeFlour);
+            Factory bakery = new Factory(foodFactory, ryeBread);
 
             //Factory.Factories.AddRange(new List<Factory> {waterSupply, cropFarm, mill, bakery });
 

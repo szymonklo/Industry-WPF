@@ -49,7 +49,7 @@ namespace ModelLibrary.Models
         private void Add(Facility facility)
         {
             FacilityName = facility.Name;
-            Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type, facility.Id, Id);
+            Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.FacilityType, facility.Id, Id);
             Products.Add(pkey, this);
 
             //przypisanie produktu
@@ -63,13 +63,13 @@ namespace ModelLibrary.Models
 
         public static Product GetProduct(ProductType productType, Facility facility)
         {
-            Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type, facility.Id, productType.Id);
+            Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.FacilityType, facility.Id, productType.Id);
             return Products[pkey];
         }
         //dlaczego nie używane
         public static Product GetProduct(int productId, Facility facility)
         {
-            Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.Type, facility.Id, productId);
+            Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.FacilityType, facility.Id, productId);
             return Products[pkey];
         }
         public Tuple<int, int, int> GetProductKey()

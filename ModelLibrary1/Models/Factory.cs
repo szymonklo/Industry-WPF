@@ -9,7 +9,7 @@ namespace ModelLibrary.Models
     {
         //TODO - przemyśleć wybór produkowanego produktu (rodzaj fabryki, sprawdzenie, czy jest produkowany, ..., czy zapisywać w klasie produkt, czy tylko id?
         //ograniczyć publiczne metody, właściwości, szczególnie dotyczące ID, statycznej listy obiektów klasy, obliczania i w miarę możliwości zastąpić je przez metody zdefiniowane wewnątrz klasy
-        public new int Type { get; private set; } = 1;
+        public new int FacilityType { get; private set; } = 1;
         public override int Id { get; set; }
         //do usuniecia?
         public byte Tier { get; set; }
@@ -36,6 +36,15 @@ namespace ModelLibrary.Models
             lastId++;
             
             Factories.Add(this);
+        }
+
+        public Factory(FactoryType factoryType, ProductType productType = null)
+            :this (factoryType.Name, factoryType.DefProduction, factoryType.ProductTypes[0], factoryType.Tier)
+        {
+            BaseCost = factoryType.BaseCost;
+            if (productType != null)
+                ProductType = productType;
+            //TODO - dodać koszt budowy
         }
 
         public static void ResetId()
@@ -97,7 +106,7 @@ namespace ModelLibrary.Models
 
         private void SetProduct()
         {
-            Tuple<int, int, int> productKey = new Tuple<int, int, int>(Type, Id, ProductType.Id);
+            Tuple<int, int, int> productKey = new Tuple<int, int, int>(FacilityType, Id, ProductType.Id);
 
             if (Product.Products.ContainsKey(productKey))
                 Product = Product.GetProduct(ProductType, this);
@@ -112,7 +121,7 @@ namespace ModelLibrary.Models
                 Components.Clear();
                 foreach (ProductType componentType in ProductType.ComponentTypes)
                 {
-                    Tuple<int, int, int> componentKey = new Tuple<int, int, int>(Type, Id, componentType.Id);
+                    Tuple<int, int, int> componentKey = new Tuple<int, int, int>(FacilityType, Id, componentType.Id);
 
                     if (!(Product.Products.ContainsKey(componentKey)))
                         Components.Add(new Product(componentType, this));
