@@ -18,6 +18,7 @@ namespace ModelLibrary.Models
             SetType();
         }
 
+        //TODO  - zmienić i nie odwoływać się do klas dziedziczących z Facility
         public void SetType()
         {
             if (this is Factory)

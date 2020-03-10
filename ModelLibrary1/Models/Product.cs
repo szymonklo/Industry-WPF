@@ -21,7 +21,11 @@ namespace ModelLibrary.Models
         public double Income { get; set; }
         public double Cost { get; set; }
         public double Profit { get; set; }
-
+        public double ValueIn { get; set; }
+        public double ValueOut { get; set; }
+        /// <summary>
+        /// Dictionary of Product, key is <facility.Type, Facility.Id, Id>
+        /// </summary>
         public static Dictionary<Tuple<int, int, int>, Product> Products { get; set; } = new Dictionary<Tuple<int, int, int>, Product>();
 
         public static List<Product> GetAll()
@@ -34,7 +38,7 @@ namespace ModelLibrary.Models
             : base(group, productName, defPrice, components) { }
 
         public Product(ProductType productType, Facility facility, int amount = 0)
-            : this(productType.Group, productType.Name, productType.DefPrice, productType.Components)
+            : this(productType.Group, productType.Name, productType.DefPrice, productType.ComponentTypes)
         {
             Id = productType.Id;
             ProductionCost = productType.Group;

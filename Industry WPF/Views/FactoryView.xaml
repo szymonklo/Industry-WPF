@@ -54,15 +54,18 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="100"/>
-                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="100"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
+                                    
+                                    <!-- Component name -->
                                     <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" />
 
+                                    <!-- Amounts -->
                                     <Border Grid.Row="0" Grid.Column="0" BorderBrush="Brown" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
                                         <TextBlock Text="{Binding AmountIn}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
                                     </Border>
@@ -72,12 +75,23 @@
                                     <Border Grid.Row="2" Grid.Column="0" BorderBrush="GreenYellow" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
                                         <TextBlock Text="{Binding AmountOut}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
                                     </Border>
+
+                                    <!-- Cost -->
+                                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Brown" BorderThickness="5" CornerRadius="5" Height="35" Width="55">
+                                        <TextBlock Text="{Binding ProductCost, StringFormat={}{0:C}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                                    </Border>
+
+                                    <!-- Value -->
+                                    <Border Grid.Row="0" Grid.Column="2" BorderBrush="Brown" BorderThickness="5" CornerRadius="5" Height="35" Width="70">
+                                        <TextBlock Text="{Binding ValueIn, StringFormat={}{0:C0}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                                    </Border>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </GroupBox>
+            
             <!-- Products -->
             <GroupBox Header="Products" Grid.Column="0" Grid.Row="1">
                 <ItemsControl x:Name="Product" ItemsSource="{Binding Products}" HorizontalAlignment="Center">
@@ -100,8 +114,11 @@
                                     <RowDefinition Height="100"/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
+                                
+                                <!-- Product Name -->
                                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" />
 
+                                <!-- Amounts -->
                                 <Border Grid.Row="0" Grid.Column="0" BorderBrush="Brown" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
                                     <TextBlock Text="{Binding AmountIn}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
                                 </Border>
@@ -110,6 +127,16 @@
                                 </Border>
                                 <Border Grid.Row="2" Grid.Column="0" BorderBrush="GreenYellow" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
                                     <TextBlock Text="{Binding AmountOut}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                </Border>
+
+                                <!-- Cost -->
+                                <Border Grid.Row="2" Grid.Column="1" BorderBrush="GreenYellow" BorderThickness="5" CornerRadius="5" Height="35" Width="55">
+                                    <TextBlock Text="{Binding ProductCost, StringFormat={}{0:C}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                                </Border>
+
+                                <!-- Value -->
+                                <Border Grid.Row="2" Grid.Column="3" BorderBrush="GreenYellow" BorderThickness="5" CornerRadius="5" Height="35" Width="70">
+                                    <TextBlock Text="{Binding ValueOut, StringFormat={}{0:C0}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
                                 </Border>
                             </Grid>
                         </Border>

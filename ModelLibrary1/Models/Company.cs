@@ -21,6 +21,13 @@ namespace ModelLibrary.Models
             Companies.Add(this);
         }
 
+        public void ResetFinancesBeforeRound()
+        {
+            Income = 0;
+            Cost = 0;
+            Profit = 0;
+        }
+
         public void CalculateProfit()
         {
             Profit = Income - Cost;

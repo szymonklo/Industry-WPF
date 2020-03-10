@@ -11,6 +11,7 @@ namespace ModelLibrary.Models
         //ograniczyć publiczne metody, właściwości, szczególnie dotyczące ID, statycznej listy obiektów klasy, obliczania i w miarę możliwości zastąpić je przez metody zdefiniowane wewnątrz klasy
         public new int Type { get; private set; } = 1;
         public override int Id { get; set; }
+        //do usuniecia?
         public byte Tier { get; set; }
         public int DefProduction { get; set; }
         public int ProductionAmount { get; set; }
@@ -33,12 +34,7 @@ namespace ModelLibrary.Models
             Tier = tier;
             Id = lastId;
             lastId++;
-            //Type = 1;
-
-            //test
-            //Product.Add(Product, this);
             
-
             Factories.Add(this);
         }
 
@@ -56,71 +52,75 @@ namespace ModelLibrary.Models
 
         public void Produce()
         {
-            //test
-            BaseCost = 10;// + 0.1 * Round.RoundNumber;
+            //TODO - uwzglednic sytuacje, gdy produkt staje się komponentem i odwrotnie (zmiana typu produktu)
+            SetProduct();
 
-            Tuple<int, int, int> key = new Tuple<int, int, int>(Type, Id, ProductType.Id);
-            if (!(Product.Products.ContainsKey(key)))
-                Product = new Product(ProductType, this);
-            else
-                Product = Product.GetProduct(ProductType, this);
-
-            //Products.Add(Product);
-
-            if (ProductType.Components != null)
-            {
-                foreach (ProductType component in ProductType.Components)
-                {
-                    Tuple<int, int, int> ckey = new Tuple<int, int, int>(Type, Id, component.Id);
-                    if (!(Product.Products.ContainsKey(ckey)))
-                        Components.Add(new Product(component, this));
-                }
-            }
-
+            SetComponents();
+            
             CheckComponents();
+
             CalculateProductionAmount();
 
             //DONE - uwzglednic poprzednia runde
-            double produktsOnStockCosts = Product.ProductCost * Product.AmountOut;
+            Product.ValueOut = Product.ProductCost * Product.AmountOut;
             Product.Cost = 0;
 
-            if (ProductType.Components == null)
+            if (ProductType.ComponentTypes == null)
                 Product.AmountDone = ProductionAmount;
             else if (AmountOfAvailableComponents > 0)
             {
                 Product.AmountDone = Math.Min(ProductionAmount, AmountOfAvailableComponents);
 
-                foreach (ProductType component in ProductType.Components)
+                foreach (Product component in Components)
                 {
-                    Product factoryComponent = Product.GetProduct(component, this);
-                    Product.Cost += factoryComponent.ProductCost * Product.AmountDone;
-                    produktsOnStockCosts = +Product.Cost;
-                    factoryComponent.AmountIn -= Product.AmountDone;
-                    //dodane 2020-02-24
-                    factoryComponent.AmountDone = -Product.AmountDone;
-                    Console.WriteLine($"{Name} used: {Product.AmountDone} {factoryComponent.Name} (Components remained: {factoryComponent.AmountIn} {factoryComponent.Name})");
+                    component.ValueIn = component.AmountIn * component.ProductCost;
+                    Product.Cost += component.ProductCost * Product.AmountDone;
+                    Product.ValueOut = +Product.Cost;
+                    component.AmountIn -= Product.AmountDone;
+                    component.AmountDone = -Product.AmountDone;
+                    Console.WriteLine($"{Name} used: {Product.AmountDone} {component.Name} (Components remained: {component.AmountIn} {component.Name})");
                 }
             }
             Product.AmountOut += Product.AmountDone;
             Product.Cost += (Product.ProductionCost * Product.AmountDone + BaseCost);
-            produktsOnStockCosts += Product.ProductionCost * Product.AmountDone + BaseCost;
+            Product.ValueOut += Product.ProductionCost * Product.AmountDone + BaseCost;
             Company.Companies[0].Cost += Product.Cost;
             Company.Companies[0].Money -= Product.Cost;
-            //Product.Profit = -produktsOnStockCosts;
-
-            /*//checking dividing by 0)
+            
             if (Product.AmountOut > 0)
-                Product.ProductCost = produktsOnStockCosts / Product.AmountOut;
-            else
-                Product.ProductCost = produktsOnStockCosts;*/
-            if (Product.AmountOut > 0)
-                Product.ProductCost = produktsOnStockCosts / Product.AmountOut;
+                Product.ProductCost = Product.ValueOut / Product.AmountOut;
 
             TransactionDone?.Invoke(this, new ProductEventArgs(Product.GetProduct(ProductType, this)));
             Console.WriteLine($"{Name} produced: {Product.AmountDone} {Product.Name} (On stock: {Product.AmountOut} {Product.Name})");
             Console.WriteLine($"{Product.Name} cost is {Product.ProductCost:c} per 1 pc.");
         }
 
+        private void SetProduct()
+        {
+            Tuple<int, int, int> productKey = new Tuple<int, int, int>(Type, Id, ProductType.Id);
+
+            if (Product.Products.ContainsKey(productKey))
+                Product = Product.GetProduct(ProductType, this);
+            else
+                Product = new Product(ProductType, this);
+        }
+
+        private void SetComponents()
+        {
+            if (ProductType.ComponentTypes != null)
+            {
+                Components.Clear();
+                foreach (ProductType componentType in ProductType.ComponentTypes)
+                {
+                    Tuple<int, int, int> componentKey = new Tuple<int, int, int>(Type, Id, componentType.Id);
+
+                    if (!(Product.Products.ContainsKey(componentKey)))
+                        Components.Add(new Product(componentType, this));
+                    else
+                        Components.Add(Product.GetProduct(componentType, this));
+                }
+            }
+        }
         private void CalculateProductionAmount()
         {
             switch (ProductType.Group)
@@ -138,9 +138,9 @@ namespace ModelLibrary.Models
         {
             AmountOfAvailableComponents = Int32.MaxValue;
 
-            if (ProductType.Components != null)
+            if (ProductType.ComponentTypes != null)
             {
-                foreach (ProductType component in ProductType.Components)
+                foreach (ProductType component in ProductType.ComponentTypes)
                 {
                     Product factoryComponent = Product.GetProduct(component, this);
                     if (factoryComponent.AmountIn > 0)

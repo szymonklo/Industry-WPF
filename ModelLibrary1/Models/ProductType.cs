@@ -28,7 +28,7 @@ namespace ModelLibrary.Models
         public double DefPrice { get; set; }
         public double DefCost { get; set; }
 
-        public List<ProductType> Components { get; set; } = new List<ProductType>();
+        public List<ProductType> ComponentTypes { get; set; } = new List<ProductType>();
 
         public static List<ProductType> ProductTypes = new List<ProductType>();
 
@@ -46,7 +46,7 @@ namespace ModelLibrary.Models
             Name = productName;
             DefPrice = defPrice;
             if (components != null)
-                Components = components;
+                ComponentTypes = components;
 
             //something better...
             if (!(this is Product))

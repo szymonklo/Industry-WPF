@@ -29,6 +29,8 @@ namespace Industry_WPF.ViewModels
             {
                 _factoryName = value;
                 NotifyOfPropertyChange(() => FactoryName);
+                //test
+                Factory.Name = value;
             }
         }
         private BindableCollection<Product> _components;

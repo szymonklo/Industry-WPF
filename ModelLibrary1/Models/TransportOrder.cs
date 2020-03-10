@@ -69,6 +69,7 @@ namespace ModelLibrary.Models
 
                 Amount = Math.Min(Capacity, productS.AmountOut);
                 productS.AmountOut -= Amount;
+                productS.ValueOut -= Amount* productS.ProductCost;
                 Product productIn;
                 Product productR = Product.GetProduct(ProductType, Receiver);
                 if (productR != null)

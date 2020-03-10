@@ -46,7 +46,7 @@ namespace ModelLibrary.DataAccess
                 foreach (string c in list)
                 {
                     if (c.Length > 0)
-                        productType.Components.Add(ProductType.GetProductType(int.Parse(c)));
+                        productType.ComponentTypes.Add(ProductType.GetProductType(int.Parse(c)));
                 }
             }
         }
@@ -58,9 +58,9 @@ namespace ModelLibrary.DataAccess
             {
                 StringBuilder components = new StringBuilder();
 
-                if (p.Components != null)
+                if (p.ComponentTypes != null)
                 {
-                    foreach (ProductType c in p.Components)
+                    foreach (ProductType c in p.ComponentTypes)
                         components.Append(c.Id).Append('|');
                     components.Remove(components.Length-1, 1);
                 }

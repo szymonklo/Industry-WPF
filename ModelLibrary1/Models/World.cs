@@ -75,8 +75,8 @@ namespace ModelLibrary.Models
                 {
                     
                     List<Facility> receivers = Factory.Factories
-                        .Where(factoryR => factoryR.ProductType.Components != null)
-                        .Where(factoryR => factoryR.ProductType.Components.Contains(factoryS.ProductType))
+                        .Where(factoryR => factoryR.ProductType.ComponentTypes != null)
+                        .Where(factoryR => factoryR.ProductType.ComponentTypes.Contains(factoryS.ProductType))
                         .Cast<Facility>().ToList();
 
                     receivers.AddRange(City.Cities.Cast<Facility>().ToList());
