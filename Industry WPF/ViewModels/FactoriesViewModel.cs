@@ -13,6 +13,9 @@ namespace Industry_WPF.ViewModels
         private BindableCollection<Factory> _factories;// = new BindableCollection<Factory>(World.Factories);
         private Factory _selectedFactory;
 
+        private BindableCollection<FactoryType> _factoryTypes;
+        private FactoryType _selectedFactoryType;
+
         private BindableCollection<FactoryViewModel> Items = new BindableCollection<FactoryViewModel>();
 
         public FactoryViewModel FactoryViewModel;
@@ -34,7 +37,24 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Factories);
             }
         }
-
+        public BindableCollection<FactoryType> FactoryTypes
+        {
+            get { return _factoryTypes; }
+            set
+            {
+                _factoryTypes = value;
+                NotifyOfPropertyChange(() => FactoryTypes);
+            }
+        }
+        public FactoryType SelectedFactoryType
+        {
+            get { return _selectedFactoryType; }
+            set
+            {
+                _selectedFactoryType = value;
+                NotifyOfPropertyChange(() => SelectedFactoryType);
+            }
+        }
         public FactoriesViewModel()
         {
             //Factories = new BindableCollection<Factory>(World.Factories);
@@ -44,6 +64,7 @@ namespace Industry_WPF.ViewModels
         public void Load()
         {
             Factories = new BindableCollection<Factory>(Factory.Factories);
+            FactoryTypes = new BindableCollection<FactoryType>(FactoryType.FactoryTypes);
             FactoryViewModel?.Load();
         }
 
@@ -59,6 +80,18 @@ namespace Industry_WPF.ViewModels
             //var f = new FactoryViewModel(SelectedFactory);
             //Items.Add(f);
             //ActivateItem(f);
+        }
+
+        public void BuildNewFactory()
+        {
+            if (SelectedFactoryType is null)
+                return;
+
+            SelectedFactory = new Factory(SelectedFactoryType);
+            var conductor = this.Parent as IConductor;
+            FactoryViewModel = new FactoryViewModel(SelectedFactory);
+
+            conductor.ActivateItem(FactoryViewModel);
         }
     }
 }

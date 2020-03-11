@@ -158,13 +158,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\FactoryBackground.JPG" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ModelLibrary1\ModelLibrary.csproj">
       <Project>{0ff630eb-d044-49e3-a93e-51bc89266ed7}</Project>
       <Name>ModelLibrary</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\FactoryBackground.JPG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

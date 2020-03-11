@@ -15,6 +15,8 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="10" />
             <RowDefinition Height="20" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <DataGrid AlternatingRowBackground="LightGray" CanUserAddRows="false" IsReadOnly="True"
@@ -55,5 +57,25 @@
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
         <Button x:Name="ShowFactory" Content="Show Factory Details" Grid.Row="2"/>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="FactoryTypes2" ItemsSource="{Binding FactoryTypes}" SelectedItem="{Binding SelectedFactoryType}" Grid.Column="1">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" Width="100"/>
+                            <TextBlock Text="{Binding ConstructionCost, StringFormat={}{0:C0}}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button x:Name="BuildNewFactory" Content="Build New Factory" Grid.Column="3"/>
+        </Grid>
     </Grid>
 </UserControl>
