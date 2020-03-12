@@ -54,6 +54,16 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Products);
             }
         }
+        private BindableCollection<ProductType> _productTypes;
+        public BindableCollection<ProductType> ProductTypes
+        {
+            get { return _productTypes; }
+            set
+            {
+                _productTypes = value;
+                NotifyOfPropertyChange(() => ProductTypes);
+            }
+        }
         private Product _product;
         public Product Product
         {
@@ -75,6 +85,7 @@ namespace Industry_WPF.ViewModels
             FactoryName = factory.Name;
             Components = new BindableCollection<Product>(factory.Components);
             Products = new BindableCollection<Product>(Factory.Products);
+            ProductTypes = new BindableCollection<ProductType>(Factory.ProductTypes);
         }
 
         public void Load()
@@ -82,6 +93,8 @@ namespace Industry_WPF.ViewModels
             FactoryName = Factory.Name;
             Components = new BindableCollection<Product>(Factory.Components);
             Products = new BindableCollection<Product>(Factory.Products);
+            ProductTypes = new BindableCollection<ProductType>(Factory.ProductTypes);
+
         }
     }
 }
