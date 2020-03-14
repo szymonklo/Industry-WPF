@@ -64,6 +64,19 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => ProductTypes);
             }
         }
+        private ProductType _selectedProductType;
+        public ProductType SelectedProductType
+        {
+            get { return _selectedProductType; }
+            set
+            {
+                _selectedProductType = value;
+                
+                NotifyOfPropertyChange(() => SelectedProductType);
+                NotifyOfPropertyChange(() => ProductTypes);
+                NotifyOfPropertyChange(() => Components);
+            }
+        }
         private Product _product;
         public Product Product
         {
@@ -93,8 +106,16 @@ namespace Industry_WPF.ViewModels
             FactoryName = Factory.Name;
             Components = new BindableCollection<Product>(Factory.Components);
             Products = new BindableCollection<Product>(Factory.Products);
-            ProductTypes = new BindableCollection<ProductType>(Factory.ProductTypes);
+            
+            if (SelectedProductType ==  null)
+                ProductTypes = new BindableCollection<ProductType>(Factory.ProductTypes);
 
+        }
+
+        public void SetProduct()
+        {
+            Factory.Set(SelectedProductType);
+            Load();
         }
     }
 }

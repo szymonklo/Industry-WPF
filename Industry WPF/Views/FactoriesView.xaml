@@ -66,6 +66,7 @@
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
             <ComboBox x:Name="FactoryTypes2" ItemsSource="{Binding FactoryTypes}" SelectedItem="{Binding SelectedFactoryType}" Grid.Column="1">
+                <!--//Text="Select Factory Type" IsEditable="True" IsReadOnly="True">-->
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

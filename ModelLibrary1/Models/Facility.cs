@@ -7,7 +7,20 @@ namespace ModelLibrary.Models
 {
     public abstract class Facility
     {
-        public string Name { get; set; }
+        protected string _name;
+        public string Name
+        { 
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                //TODO - zaktualizować Facility Name w obiekcie Product po zmianie nazwy (a lepiej oddzielić od siebie te właściwości)
+
+            }
+        }
         public abstract int Id { get; set; }
         public List<Product> Products { get; set; } = new List<Product>();
         public int FacilityType { get; set; }

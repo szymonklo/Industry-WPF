@@ -12,7 +12,7 @@ namespace ModelLibrary.Models
         public int DefProduction { get; set; }
         public double BaseCost { get; set; } = 10;
         public int ConstructionCost { get; set; }
-        public List<ProductType> ProductTypes { get; set; }
+        public List<ProductType> ProductTypes { get; set; } = new List<ProductType>();
         public static List<FactoryType> FactoryTypes { get; private set; } = new List<FactoryType>();
 
         public FactoryType (string name, byte tier, int defProduction, double baseCost, int construcionCost, List<ProductType> productTypes)

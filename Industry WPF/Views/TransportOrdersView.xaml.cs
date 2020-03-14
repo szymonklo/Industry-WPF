@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace Industry_WPF.Views
 {
@@ -24,5 +25,13 @@ namespace Industry_WPF.Views
         {
             InitializeComponent();
         }
+
+        //private void Details3(object sender, RoutedEventArgs e)
+        //{
+        //    //TODO - w innny sposów (Icommand?)
+        //    TransprtOrder transportOrder=  ((Button)e.Source).DataContext;
+        //    DataRow dataRow = (DataRow) ((Button)e.Source).DataContext;
+        //    MessageBox.Show($"sender: {sender.ToString()} e: {e.ToString()}");
+        //}
     }
 }

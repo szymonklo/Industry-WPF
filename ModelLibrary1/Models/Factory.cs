@@ -22,6 +22,7 @@ namespace ModelLibrary.Models
         private static int lastId { get; set; }
         //public int AmounToSend { get; set; }
         public int AmountOfAvailableComponents { get; set; }
+        public List<ProductType> ProductTypes { get; set; }
 
         public static List<Factory> Factories = new List<Factory>();
 
@@ -45,6 +46,7 @@ namespace ModelLibrary.Models
             if (productType != null)
                 ProductType = productType;
             //TODO - dodać koszt budowy
+            ProductTypes = factoryType.ProductTypes;
         }
 
         public static void ResetId()
@@ -59,11 +61,17 @@ namespace ModelLibrary.Models
         public event NoComponentsDelegate NoComponents;
         public event TransactionDoneDelegate TransactionDone;
 
+        public void Set(ProductType productType)
+        {
+            this.ProductType = productType;
+            SetProduct();
+            SetComponents();
+        }
         public void Produce()
         {
             //TODO - uwzglednic sytuacje, gdy produkt staje się komponentem i odwrotnie (zmiana typu produktu)
+            //TODO - poprawić błąd - komponanty zużywane (amount done != 0), ,gdy nie ma produkcji
             SetProduct();
-
             SetComponents();
             
             CheckComponents();
@@ -76,7 +84,7 @@ namespace ModelLibrary.Models
 
             if (ProductType.ComponentTypes == null)
                 Product.AmountDone = ProductionAmount;
-            else if (AmountOfAvailableComponents > 0)
+            else //if (AmountOfAvailableComponents > 0)
             {
                 Product.AmountDone = Math.Min(ProductionAmount, AmountOfAvailableComponents);
 
@@ -106,6 +114,8 @@ namespace ModelLibrary.Models
 
         private void SetProduct()
         {
+            if (Product != null)
+                Product.AmountDone = 0; //zerowanie produktu, który nie jest już produkowany i inaczej wartość się nie zaktualizuje
             Tuple<int, int, int> productKey = new Tuple<int, int, int>(FacilityType, Id, ProductType.Id);
 
             if (Product.Products.ContainsKey(productKey))

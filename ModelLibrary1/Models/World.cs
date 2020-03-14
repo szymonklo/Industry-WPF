@@ -34,11 +34,11 @@ namespace ModelLibrary.Models
             ProductType water = new ProductType(1, "water", 2);
             ProductType wheat = new ProductType(1, "wheat", 2);
             ProductType rye = new ProductType(1, "rye", 3);
-            ProductType wheatFlour = new ProductType(2, "flour", 6, new List<ProductType> { wheat });
-            ProductType ryeFlour = new ProductType(2, "flour", 7, new List<ProductType> { rye });
-            ProductType wheatBread = new ProductType(3, "bread", 14, new List<ProductType> { water, wheatFlour });
-            ProductType ryeBread = new ProductType(3, "bread", 16, new List<ProductType> { water, ryeFlour });
-            ProductType mixedBread = new ProductType(3, "bread", 15, new List<ProductType> { water, wheatFlour, ryeFlour});
+            ProductType wheatFlour = new ProductType(2, "wheatFlour", 6, new List<ProductType> { wheat });
+            ProductType ryeFlour = new ProductType(2, "ryeFlour", 7, new List<ProductType> { rye });
+            ProductType wheatBread = new ProductType(3, "wheatBread", 14, new List<ProductType> { water, wheatFlour });
+            ProductType ryeBread = new ProductType(3, "ryeBread", 16, new List<ProductType> { water, ryeFlour });
+            ProductType mixedBread = new ProductType(3, "mixedBread", 15, new List<ProductType> { water, wheatFlour, ryeFlour});
 
             //ProductType.ProductTypes.AddRange(new List<ProductType> { water, wheat, flour, bread });
 

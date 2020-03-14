@@ -94,6 +94,7 @@
             
             <!-- Products -->
             <GroupBox Header="Products" Grid.Column="0" Grid.Row="1">
+                <StackPanel>
                 <ItemsControl x:Name="Product" ItemsSource="{Binding Products}" HorizontalAlignment="Center">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -117,7 +118,7 @@
                                 
                                 <!-- Product Name -->
                                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" />
-
+                                            
                                 <!-- Amounts -->
                                 <Border Grid.Row="0" Grid.Column="0" BorderBrush="Brown" BorderThickness="5" CornerRadius="5" Height="35" Width="35">
                                     <TextBlock Text="{Binding AmountIn}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
@@ -143,6 +144,19 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox ItemsSource="{Binding ProductTypes}" SelectedItem="{Binding SelectedProductType}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" />
+
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button x:Name="SetProduct" Content="Set Product"/>
+                    </StackPanel>
+                </StackPanel>
             </GroupBox>
         </Grid>
 
