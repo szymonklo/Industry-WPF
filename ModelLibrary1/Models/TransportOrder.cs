@@ -62,23 +62,30 @@ namespace ModelLibrary.Models
             : this(Facility.GetFacility(senderType, senderId), Facility.GetFacility(receiverType, receiverId), ProductType.GetProductType(productTypeId), capacity, receiversNumber)
         {
         }
+
         public void Add()
         {
             Tuple<int, int, int, int, int> tokey = new Tuple<int, int, int, int, int>
                 (Sender.FacilityType, Sender.Id, Receiver.FacilityType, Receiver.Id, ProductType.Id);
             TransportOrders.Add(tokey, this);
         }
-        public static TransportOrder GetOrder(Facility sender, Facility receiver, ProductType productType)
+        public static TransportOrder GetTransportOrder(Facility sender, Facility receiver, ProductType productType)
         {
             Tuple<int, int, int, int, int> tokey = new Tuple<int, int, int, int, int>
                 (sender.FacilityType, sender.Id, receiver.FacilityType, receiver.Id, productType.Id);
-            return TransportOrders[tokey];
+
+            TransportOrder transportOrder = null;
+            if (TransportOrders.ContainsKey(tokey))
+                transportOrder = TransportOrders[tokey];
+            return transportOrder;
         }
         public void Go()
         {
             Product productS = Product.GetProduct(ProductType, Sender);
+
+            if (Round.RoundNumber <=8)  //test
             Capacity = productS.AmountOut / ReceiversNumber;
-            if (productS != null && productS.AmountOut > 0)
+            if (productS != null)// && productS.AmountOut > 0)
             //Sender.Products.Contains(ProductType.Id) && Sender.Products[ProductType.Id].AmountOut > 0)
             {
                 if (productS.AmountOut < Capacity)

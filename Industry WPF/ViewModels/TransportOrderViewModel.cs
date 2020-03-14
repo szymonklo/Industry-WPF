@@ -85,6 +85,18 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => ProductType);
             }
         }
+
+        private int _capacity;
+        public int Capacity
+        {
+            get { return _capacity; }
+            set
+            {
+                _capacity = value;
+                NotifyOfPropertyChange(() => Capacity);
+            }
+        }
+
         private BindableCollection<ProductType> _productTypes;
         public BindableCollection<ProductType> ProductTypes
         {
@@ -110,6 +122,8 @@ namespace Industry_WPF.ViewModels
             ProductTypes = new BindableCollection<ProductType>(ProductType.ProductTypes);
             Sender = transportOrder.Sender;
             Receiver = transportOrder.Receiver;
+            Capacity = TransportOrder.Capacity;
+
         }
 
         public void Load()
@@ -121,19 +135,25 @@ namespace Industry_WPF.ViewModels
             ProductTypes = new BindableCollection<ProductType>(ProductType.ProductTypes);
             Sender = TransportOrder.Sender;
             Receiver = TransportOrder.Receiver;
+            Capacity = TransportOrder.Capacity;
         }
         public void Apply()
         {
-            TransportOrder.Sender = Sender;
-            TransportOrder.Receiver = Receiver;
-            TransportOrder.ProductType = ProductType;
+            if (Sender != null && Receiver != null && ProductType != null)
+            {
+                TransportOrder.Sender = Sender;
+                TransportOrder.Receiver = Receiver;
+                TransportOrder.ProductType = ProductType;
+                TransportOrder.Capacity = Capacity;
 
-            TransportOrder.SetName();
-            TransportOrderName = TransportOrder.Name;
+                TransportOrder.SetName();
+                TransportOrderName = TransportOrder.Name;
+
+                if (TransportOrder.GetTransportOrder(Sender, Receiver, ProductType) == null)
+                    TransportOrder.Add();
+            }
 
 
-            if (Sender != null && Receiver != null && ProductType !=null)
-                TransportOrder.Add();
         }
 
         //public void SetProduct()

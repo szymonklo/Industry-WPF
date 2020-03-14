@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Industry_WPF.Views"
-      mc:Ignorable="d" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
@@ -29,6 +30,8 @@
 
         <Grid Grid.Row="2" Grid.Column="0">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="10"/>
@@ -76,7 +79,10 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Button Grid.Column="7" Grid.Row="1" x:Name="Apply" Content="Apply"/>
+            <TextBlock Grid.Row="0" Grid.Column="7" Text="Capacity:"/>
+            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="7" x:Name="Capacity" Value="{Binding Capacity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Button Grid.Column="9" Grid.Row="1" x:Name="Apply" Content="Apply"/>
 
         </Grid>
     </Grid>
