@@ -35,7 +35,7 @@
                 <DataGridTemplateColumn Header="Components">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ListBox ItemsSource="{Binding ProductType.Components}">
+                            <ListBox ItemsSource="{Binding ProductType.ComponentTypes}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Name}"/>

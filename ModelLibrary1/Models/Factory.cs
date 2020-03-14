@@ -14,13 +14,32 @@ namespace ModelLibrary.Models
         //do usuniecia?
         public byte Tier { get; set; }
         public int DefProduction { get; set; }
-        public int ProductionAmount { get; set; }
+        
+        private List<KeyValuePair<int, int>> _productionAmountHistory = new List<KeyValuePair<int, int>>();
+
+        public List<KeyValuePair<int, int>> ProductionAmountHistory
+        {
+            get { return _productionAmountHistory; }
+            set { _productionAmountHistory = value; }
+        }
+
+        private int _productionAmount;
+        public int ProductionAmount
+        {
+            get { return _productionAmount; }
+            set
+            {
+                _productionAmount = value;
+                ProductionAmountHistory.Add(new KeyValuePair<int, int>(Round.RoundNumber, value));
+            }
+        }
+
         public double BaseCost { get; set; } = 10;
         public ProductType ProductType { get; set; }
         public Product Product { get; set; }
         public List<Product> Components { get; set; } = new List<Product>();
         private static int lastId { get; set; }
-        //public int AmounToSend { get; set; }
+        public int AmounToSend { get; set; }
         public int AmountOfAvailableComponents { get; set; }
         public List<ProductType> ProductTypes { get; set; }
 
@@ -83,10 +102,15 @@ namespace ModelLibrary.Models
             Product.Cost = 0;
 
             if (ProductType.ComponentTypes == null)
+            {
+                ProductionAmount = DefProduction;
                 Product.AmountDone = ProductionAmount;
+            }
             else //if (AmountOfAvailableComponents > 0)
             {
-                Product.AmountDone = Math.Min(ProductionAmount, AmountOfAvailableComponents);
+                ProductionAmount = Math.Min(DefProduction, AmountOfAvailableComponents);
+                Product.AmountDone = ProductionAmount;
+
 
                 foreach (Product component in Components)
                 {
@@ -99,6 +123,7 @@ namespace ModelLibrary.Models
                 }
             }
             Product.AmountOut += Product.AmountDone;
+            AmounToSend = Product.AmountOut;
             Product.Cost += (Product.ProductionCost * Product.AmountDone + BaseCost);
             Product.ValueOut += Product.ProductionCost * Product.AmountDone + BaseCost;
             Company.Companies[0].Cost += Product.Cost;
@@ -145,10 +170,10 @@ namespace ModelLibrary.Models
             switch (ProductType.Group)
             {
                 case 1:
-                    ProductionAmount = DefProduction;
+                    DefProduction = DefProduction;
                     break;
                 default:
-                    ProductionAmount = DefProduction;
+                    DefProduction = DefProduction;
                     break;
             };
         }

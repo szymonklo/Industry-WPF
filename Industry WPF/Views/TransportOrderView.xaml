@@ -71,6 +71,7 @@
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock x:Name="ProductTypeName" Text="{Binding Name}"/>
+                        
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>

@@ -3,6 +3,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Compatible;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             xmlns:DVCP="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
       xmlns:local="clr-namespace:Industry_WPF.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800">
@@ -10,6 +12,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -158,54 +161,30 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
-        </Grid>
-
-        <!-- Components v2--><!--
-        <DataGrid Grid.Row="2" Grid.Column="0" Background="Transparent" RowBackground="Transparent"
-                  ItemsSource="{Binding Components}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="AmountIn" Binding="{Binding Name}"/>
-            </DataGrid.Columns>
             
-        </DataGrid>-->
 
-        <!--Content Control for Factories, Cities, TransportOrders etc.--><!--
-        <Button x:Name="ShowFactories" Content="Factories" Grid.Column="0" Grid.Row="2"/>
-        <Button x:Name="ShowCities" Content="Cities" Grid.Column="1" Grid.Row="2"/>
-        <Button x:Name="ShowTransportOrders" Content="TransportOrders" Grid.Column="2" Grid.Row="2"/>
-        <Button x:Name="ShowProducts" Content="Products" Grid.Column="3" Grid.Row="2"/>
-
-        <ContentControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" x:Name="ActiveItem"/>
-
-        --><!--Saving--><!--
-        <Button x:Name="SaveAll" Content="Save All" Grid.Column="0" Grid.Row="5"/>
-        <Button x:Name="LoadAll" Content="Load All" Grid.Column="2" Grid.Row="5"/>
-
-        --><!--Company--><!--
-        <TextBlock x:Name="Company_Name" Grid.Column="5" Grid.Row="1" Grid.RowSpan="2" FontSize="24"/>
-        <StackPanel Orientation="Horizontal" Grid.Column="5" Grid.Row="3">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="Money: " FontWeight="Bold"/>
-                <TextBlock Text="Income: "/>
-                <TextBlock Text="Cost: "/>
-                <TextBlock Text="Profit: "/>
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <TextBlock x:Name="Company_Money" Text="{Binding Company.Money, StringFormat=N2}" TextAlignment="Right" FontWeight="Bold"/>
-                <TextBlock x:Name="Income" Text="{Binding Company.Income, StringFormat=N2}" TextAlignment="Right"/>
-                <TextBlock x:Name="Cost" Text="{Binding Company.Cost, StringFormat=N2}" TextAlignment="Right"/>
-                <TextBlock x:Name="Profit" Text="{Binding Company.Profit, StringFormat=N2}" TextAlignment="Right"/>
-            </StackPanel>
-        </StackPanel>
-
-        --><!--Rounds--><!--
-        <StackPanel Orientation="Horizontal" Grid.Column="5" Grid.Row="4">
-            <TextBlock>Round:</TextBlock>
-            <TextBlock x:Name="RoundNumber"/>
-        </StackPanel>
-
-        <Button x:Name="NextRound" Content="Next Round" Grid.Column="5" Grid.Row="5"/>-->
-
-
+        </Grid>
+        <GroupBox Header="History of Production" Grid.Column="1" Grid.Row="1">
+            <!--<DVC:ScatterSeries x:Name="HistoryOfProduction" Background="DarkGreen"
+                               Width="400" Height="400"
+                              ItemsSource="{Binding ProductionAmountHistory}"
+                              IndependentValueBinding="{Binding Key}"
+                              DependentValueBinding="{Binding Value}"
+                              IsSelectionEnabled="True"
+                              >
+            </DVC:ScatterSeries>-->
+            <DVCP:Chart>
+                <DVCP:Chart.Series>
+                    <DVCP:ColumnSeries  x:Name="HistoryOfProduction" Background="DarkGreen"
+                               Width="400" Height="400"
+                              ItemsSource="{Binding ProductionAmountHistory}"
+                              IndependentValueBinding="{Binding Key}"
+                              DependentValueBinding="{Binding Value}"
+                              IsSelectionEnabled="True">
+                        
+                    </DVCP:ColumnSeries>
+                </DVCP:Chart.Series>
+            </DVCP:Chart>
+        </GroupBox>
     </Grid>
 </UserControl>

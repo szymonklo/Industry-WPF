@@ -11,7 +11,21 @@ namespace ModelLibrary.Models
     {
         public int AmountIn { get; set; }
         public int AmountOut { get; set; }
-        public int AmountDone { get; set; }
+        private int _amountDone;
+        public int AmountDone
+        {
+            get
+            {
+                return _amountDone;
+            }
+            set
+            {
+                _amountDone = value;
+                AmountDoneQueue.Enqueue(value);
+                if (AmountDoneQueue.Count >= 10)
+                    AmountDoneQueue.Dequeue();
+            }
+        }
         public double ProductPrice { get; set; }
         public double MarketPriceMod { get; set; }
         public double ProductionCost { get; set; }
@@ -23,6 +37,7 @@ namespace ModelLibrary.Models
         public double Profit { get; set; }
         public double ValueIn { get; set; }
         public double ValueOut { get; set; }
+        public Queue<int> AmountDoneQueue { get; set; } = new Queue<int>(10);
         /// <summary>
         /// Dictionary of Product, key is <facility.Type, Facility.Id, Id>
         /// </summary>
