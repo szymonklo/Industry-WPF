@@ -22,8 +22,10 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <DataGrid AlternatingRowBackground="LightGray" CanUserAddRows="false" IsReadOnly="True"
@@ -47,5 +49,25 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <!--<ComboBox x:Name="FactoryTypes2" ItemsSource="{Binding FactoryTypes}" SelectedItem="{Binding SelectedFactoryType}" Grid.Column="1">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" Width="100"/>
+                            <TextBlock Text="{Binding ConstructionCost, StringFormat={}{0:C0}}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>-->
+            <Button x:Name="CreateNewTransportOrder" Content="Create New Transport Order" Grid.Column="3"/>
+        </Grid>
     </Grid>
 </UserControl>

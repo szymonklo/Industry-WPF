@@ -48,6 +48,7 @@ namespace Industry_WPF.ViewModels
             }
         }
         TransportOrderViewModel TransportOrderViewModel { get; set; }
+        TransportOrder TransportOrder { get; set; }
 
         public TransportOrdersViewModel()
         {
@@ -58,6 +59,14 @@ namespace Industry_WPF.ViewModels
             TransportOrders = new BindableCollection<TransportOrder>(TransportOrder.TransportOrders.Values);
         }
 
-        
+        public void CreateNewTransportOrder()
+        {
+            TransportOrder = new TransportOrder();
+            var conductor = this.Parent as IConductor;
+            TransportOrderViewModel = new TransportOrderViewModel(TransportOrder);
+
+            conductor.ActivateItem(TransportOrderViewModel);
+        }
+
     }
 }

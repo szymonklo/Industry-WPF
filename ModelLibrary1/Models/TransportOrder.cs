@@ -33,18 +33,29 @@ namespace ModelLibrary.Models
         //przygotować deklarację zdarzenia na podstawie powyższego delagata:
         public event FewProductsToSendDelegate FewProductsToSend;
 
+        public TransportOrder(int capacity = 20, int receiversNumber = 1)
+        {
+            Id = lastId;
+            lastId++;
+            Capacity = capacity;
+            ReceiversNumber = receiversNumber;
+        }
         public TransportOrder(Facility sender, Facility receiver, ProductType productType, int capacity, int receiversNumber)
+            :this()
         {
             Sender = sender;
             Receiver = receiver;
             ProductType = productType;
             Capacity = capacity;
             ReceiversNumber = receiversNumber;
-            Id = lastId;
-            lastId++;
-
-            Name = $"{ProductType.Name} from {Sender.Name} to {Receiver.Name}";
+            SetName();
             Add();
+
+        }
+
+        public void SetName()
+        {
+            Name = $"{ProductType.Name} from {Sender.Name} to {Receiver.Name}";
         }
 
         public TransportOrder(int senderType, int senderId, int receiverType, int receiverId, int productTypeId, int capacity, int receiversNumber)

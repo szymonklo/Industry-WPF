@@ -127,6 +127,13 @@ namespace Industry_WPF.ViewModels
             TransportOrder.Sender = Sender;
             TransportOrder.Receiver = Receiver;
             TransportOrder.ProductType = ProductType;
+
+            TransportOrder.SetName();
+            TransportOrderName = TransportOrder.Name;
+
+
+            if (Sender != null && Receiver != null && ProductType !=null)
+                TransportOrder.Add();
         }
 
         //public void SetProduct()
