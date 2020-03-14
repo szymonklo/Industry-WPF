@@ -23,8 +23,8 @@
         <!-- Title Bar -->
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <TextBlock Text="Factory: " FontSize="24"/>
-            <TextBox x:Name="FactoryName" FontSize="24"/>
-            <TextBlock x:Name="FactoryName2" Text="{Binding FactoryName}"  FontSize="24"/>
+            <TextBox x:Name="FactoryName" FontSize="24"  Background="Transparent"/>
+            <!--<TextBlock x:Name="FactoryName2" Text="{Binding FactoryName}"  FontSize="24"/>-->
         </StackPanel>
         
         

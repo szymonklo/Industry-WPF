@@ -7,15 +7,12 @@
              xmlns:local2="clr-namespace:Industry_WPF.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <!--<UserControl.DataContext>
-        <local2.TransportOrdersViewModel/>
-    </UserControl.DataContext>-->
-    <UserControl.Resources>
+
+    <!--another way to bind to ViewModel (part 1)-->
+    <!--<UserControl.Resources>
         <local2:TransportOrdersViewModel x:Key="VM2"/>
-    </UserControl.Resources>
-    <UserControl.DataContext>
-        <Binding Source="{StaticResource VM2}"/>
-    </UserControl.DataContext>
+    </UserControl.Resources>-->
+
 
 
 
@@ -41,10 +38,9 @@
                 <DataGridTemplateColumn Header="Details">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <!--<Button x:Name="Details33" Content="Show details" Click="Details3"/>-->
-                            <Button Content="Show details Command" Command="{Binding Source={StaticResource VM2}, Path=Command}"/>
-
-                            <!--<Button x:Name="Details" Content="Show details" />-->
+                            <!--another way to bind to ViewModel (part 2)-->
+                            <!--<Button Content="Show details Command" Command="{Binding Source={StaticResource VM2}, Path=Command}"/>-->
+                            <Button Content="Show details Command" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.Command}" CommandParameter="{Binding}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

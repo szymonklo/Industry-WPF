@@ -17,12 +17,13 @@ namespace Industry_WPF.ViewModels
         {
             get
             {
-                return _command ?? (_command = new Commands.RelayCommand( x => { ExecuteCommand(); }));
+                return _command ?? (_command = new Commands.RelayCommand(x => { ExecuteCommand(x); }));
             }
         }
-        private static void ExecuteCommand()
+        private void ExecuteCommand(object x)
         {
-            MessageBox.Show("Button clicked");
+            //MessageBox.Show("Button clicked");
+            this.ShowTransportOrder((TransportOrder)x);
         }
 
         private BindableCollection<TransportOrder> _transportOrders;
@@ -36,10 +37,10 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => TransportOrders);
             }
         }
+        TransportOrderViewModel TransportOrderViewModel { get; set; }
 
         public TransportOrdersViewModel()
         {
-            //Factories = new BindableCollection<Factory>(World.Factories);
         }
 
         public void Load()
@@ -47,14 +48,14 @@ namespace Industry_WPF.ViewModels
             TransportOrders = new BindableCollection<TransportOrder>(TransportOrder.TransportOrders.Values);
         }
 
-        public void Details(object sender, EventArgs e)
+        public void ShowTransportOrder(TransportOrder transportOrder)
         {
-            
-        }
+            if (transportOrder is null)
+                return;
+            var conductor = this.Parent as IConductor;
+            TransportOrderViewModel = new TransportOrderViewModel(transportOrder);
 
-        public void Details2(object sender, EventArgs e)
-        {
-            
+            conductor.ActivateItem(TransportOrderViewModel);
         }
     }
 }

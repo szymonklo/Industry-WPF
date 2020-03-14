@@ -6,6 +6,7 @@ namespace ModelLibrary.Models
 {
     public class TransportOrder
     {
+        public string Name { get; set; }
         public int TransportCost { get; set; }
         public int TransportCostPerUnit { get; set; } = 1;
         public int Amount { get; set; }
@@ -14,6 +15,9 @@ namespace ModelLibrary.Models
         public ProductType ProductType { get; set; }    //zmienić nazwę, żeby nie było konieczności użycia this.ProductType
         public int Capacity { get; set; }// = 20;
         public int ReceiversNumber { get; set; }// = 20;
+        public int Id { get; private set; }
+        private static int lastId { get; set; }
+
 
         private static Dictionary<Tuple<int, int, int, int, int>, TransportOrder> _transportOrders
             = new Dictionary<Tuple<int, int, int, int, int>, TransportOrder>();
@@ -36,6 +40,10 @@ namespace ModelLibrary.Models
             ProductType = productType;
             Capacity = capacity;
             ReceiversNumber = receiversNumber;
+            Id = lastId;
+            lastId++;
+
+            Name = $"{ProductType.Name} from {Sender.Name} to {Receiver.Name}";
             Add();
         }
 

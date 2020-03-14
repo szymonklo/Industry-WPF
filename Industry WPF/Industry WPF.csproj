@@ -78,6 +78,7 @@
     <Compile Include="ViewModels\ProductsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\TransportOrdersViewModel.cs" />
+    <Compile Include="ViewModels\TransportOrderViewModel.cs" />
     <Compile Include="ViewModels\WorldViewModel.cs" />
     <Compile Include="Views\CitiesView.xaml.cs">
       <DependentUpon>CitiesView.xaml</DependentUpon>
@@ -100,6 +101,9 @@
     </Compile>
     <Compile Include="Views\TransportOrdersView.xaml.cs">
       <DependentUpon>TransportOrdersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TransportOrderView.xaml.cs">
+      <DependentUpon>TransportOrderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorldView.xaml.cs">
       <DependentUpon>WorldView.xaml</DependentUpon>
@@ -125,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TransportOrdersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TransportOrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
