@@ -27,5 +27,56 @@
             <TextBox x:Name="TransportOrderName" FontSize="24" Background="Transparent"/>
         </StackPanel>
 
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Sender:"/>
+            <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Facilities}"
+                      SelectedValue="{Binding Sender, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock x:Name="SenderName" Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="Receiver:"/>
+            <ComboBox Grid.Row="1" Grid.Column="3" ItemsSource="{Binding Facilities}"
+                      SelectedValue="{Binding Receiver, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock x:Name="ReceiverName" Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Grid.Row="0" Grid.Column="5" Text="Product Type:"/>
+            <ComboBox Grid.Row="1" Grid.Column="5" ItemsSource="{Binding ProductTypes}"
+                      SelectedValue="{Binding ProductType, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock x:Name="ProductTypeName" Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <Button Grid.Column="7" Grid.Row="1" x:Name="Apply" Content="Apply"/>
+
+        </Grid>
     </Grid>
 </UserControl>

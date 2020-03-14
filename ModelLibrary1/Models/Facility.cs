@@ -24,6 +24,7 @@ namespace ModelLibrary.Models
         public abstract int Id { get; set; }
         public List<Product> Products { get; set; } = new List<Product>();
         public int FacilityType { get; set; }
+        public static List<Facility> Facilities = new List<Facility>();
 
 
         public Facility()

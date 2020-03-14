@@ -47,16 +47,27 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Amount To Send" Binding="{Binding Path=AmounToSend}"/>
                 <DataGridTextColumn Header="Base Cost" Binding="{Binding Path=BaseCost}"/>
+
+                <DataGridTemplateColumn Header="Details">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <!--another way to bind to ViewModel (part 2)-->
+                            <!--<Button Content="Show details Command" Command="{Binding Source={StaticResource VM2}, Path=Command}"/>-->
+                            <Button Content="Details" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.Command}" CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
             </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
+            <!--<DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <DataGrid AlternatingRowBackground="LightGray" CanUserAddRows="false" IsReadOnly="True"
                   AutoGenerateColumns="True"  ItemsSource="{Binding Products}" x:Name="ProductDataGrid">
                     </DataGrid>
                 </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
+            </DataGrid.RowDetailsTemplate>-->
         </DataGrid>
-        <Button x:Name="ShowFactory" Content="Show Factory Details" Grid.Row="2"/>
+        <!--<Button x:Name="ShowFactory" Content="Show Factory Details" Grid.Row="2"/>-->
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"/>

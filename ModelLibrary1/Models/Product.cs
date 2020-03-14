@@ -64,7 +64,10 @@ namespace ModelLibrary.Models
         public static Product GetProduct(ProductType productType, Facility facility)
         {
             Tuple<int, int, int> pkey = new Tuple<int, int, int>(facility.FacilityType, facility.Id, productType.Id);
-            return Products[pkey];
+            Product product = null;
+            if (Products.ContainsKey(pkey))
+                product = Products[pkey];
+            return product;
         }
         //dlaczego nie używane
         public static Product GetProduct(int productId, Facility facility)

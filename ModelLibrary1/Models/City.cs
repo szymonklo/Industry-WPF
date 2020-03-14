@@ -22,6 +22,8 @@ namespace ModelLibrary.Models
             //Type = 2;
 
             Cities.Add(this);
+            Facilities.Add(this);
+
         }
 
         public static void ResetId()

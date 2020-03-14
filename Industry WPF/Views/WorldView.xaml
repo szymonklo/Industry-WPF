@@ -108,12 +108,14 @@
         <!--Rounds-->
 
         <Grid Grid.Row="2" Grid.Column="1">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock>Round:</TextBlock>
-                <TextBlock x:Name="RoundNumber"/>
-            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Background="LightGray">
+                    <TextBlock>Round:</TextBlock>
+                    <TextBlock x:Name="RoundNumber"/>
+                </StackPanel>
 
-            <Button x:Name="NextRound" Content="Next Round" Grid.Column="5" Grid.Row="5"/>
+                <Button x:Name="NextRound" Content="Next Round" Grid.Column="5" Grid.Row="5"/>
+            </StackPanel>
         </Grid>
 
 

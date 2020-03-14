@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ModelLibrary.Models;
+using System.Windows.Input;
 
 namespace Industry_WPF.ViewModels
 {
@@ -68,19 +69,43 @@ namespace Industry_WPF.ViewModels
             FactoryViewModel?.Load();
         }
 
-        public void ShowFactory()
+        private ICommand _command;
+        public ICommand Command
         {
-            if (SelectedFactory is null)
+            get
+            {
+                return _command ?? (_command = new Commands.RelayCommand(x => { ExecuteCommand(x); }));
+            }
+        }
+        private void ExecuteCommand(object x)
+        {
+            //MessageBox.Show("Button clicked");
+            this.ShowFactory((Factory)x);
+        }
+
+        public void ShowFactory(Factory factory)
+        {
+            if (factory is null)
                 return;
             var conductor = this.Parent as IConductor;
-            FactoryViewModel = new FactoryViewModel(SelectedFactory);
-            
+            FactoryViewModel = new FactoryViewModel(factory);
+
             conductor.ActivateItem(FactoryViewModel);
-            
-            //var f = new FactoryViewModel(SelectedFactory);
-            //Items.Add(f);
-            //ActivateItem(f);
         }
+        //previous way to show factory details
+        //public void ShowFactory()
+        //{
+        //    if (SelectedFactory is null)
+        //        return;
+        //    var conductor = this.Parent as IConductor;
+        //    FactoryViewModel = new FactoryViewModel(SelectedFactory);
+            
+        //    conductor.ActivateItem(FactoryViewModel);
+            
+        //    //var f = new FactoryViewModel(SelectedFactory);
+        //    //Items.Add(f);
+        //    //ActivateItem(f);
+        //}
 
         public void BuildNewFactory()
         {

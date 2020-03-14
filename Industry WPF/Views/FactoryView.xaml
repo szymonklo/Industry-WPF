@@ -145,7 +145,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox ItemsSource="{Binding ProductTypes}" SelectedItem="{Binding SelectedProductType}">
+                        <ComboBox ItemsSource="{Binding ProductTypes}" SelectedItem="{Binding SelectedProductType, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
 
@@ -160,14 +160,14 @@
             </GroupBox>
         </Grid>
 
-        <!-- Components v2-->
+        <!-- Components v2--><!--
         <DataGrid Grid.Row="2" Grid.Column="0" Background="Transparent" RowBackground="Transparent"
                   ItemsSource="{Binding Components}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="AmountIn" Binding="{Binding Name}"/>
             </DataGrid.Columns>
             
-        </DataGrid>
+        </DataGrid>-->
 
         <!--Content Control for Factories, Cities, TransportOrders etc.--><!--
         <Button x:Name="ShowFactories" Content="Factories" Grid.Column="0" Grid.Row="2"/>

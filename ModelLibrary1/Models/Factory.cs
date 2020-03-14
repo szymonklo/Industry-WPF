@@ -37,6 +37,7 @@ namespace ModelLibrary.Models
             lastId++;
             
             Factories.Add(this);
+            Facilities.Add(this);
         }
 
         public Factory(FactoryType factoryType, ProductType productType = null)
@@ -70,7 +71,6 @@ namespace ModelLibrary.Models
         public void Produce()
         {
             //TODO - uwzglednic sytuacje, gdy produkt staje się komponentem i odwrotnie (zmiana typu produktu)
-            //TODO - poprawić błąd - komponanty zużywane (amount done != 0), ,gdy nie ma produkcji
             SetProduct();
             SetComponents();
             

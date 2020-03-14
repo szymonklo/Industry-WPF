@@ -256,6 +256,5 @@ namespace ModelLibrary.DataAccess
         }
 
         //TODO - listy w klasach: dla klasy lista statyczna zapisywana do csv jako lista ID
-        //TODO - KLASY STATYCZNE!
     }
 }

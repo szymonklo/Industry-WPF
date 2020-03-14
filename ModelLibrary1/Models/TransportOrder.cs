@@ -86,7 +86,7 @@ namespace ModelLibrary.Models
                 }
                 else
                 {
-                    productIn = new Product(ProductType, Receiver, Amount);
+                    productIn = new Product(ProductType, Receiver, 0);
                     //Receiver.Products.Add(new Product(ProductType, Receiver, Amount));
                 }
 

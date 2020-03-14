@@ -33,6 +33,7 @@ namespace Industry_WPF.ViewModels
                 Factory.Name = value;
             }
         }
+        //TODO - add list of ProductIn in separate GroupBox
         private BindableCollection<Product> _components;
         public BindableCollection<Product> Components
         {
@@ -43,6 +44,7 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Components);
             }
         }
+        //TODO - add list of ProductOut in separate GroupBox
 
         private BindableCollection<Product> _products;
         public BindableCollection<Product> Products
@@ -99,6 +101,8 @@ namespace Industry_WPF.ViewModels
             Components = new BindableCollection<Product>(factory.Components);
             Products = new BindableCollection<Product>(Factory.Products);
             ProductTypes = new BindableCollection<ProductType>(Factory.ProductTypes);
+            SelectedProductType = Factory.ProductType;
+
         }
 
         public void Load()
@@ -109,6 +113,8 @@ namespace Industry_WPF.ViewModels
             
             if (SelectedProductType ==  null)
                 ProductTypes = new BindableCollection<ProductType>(Factory.ProductTypes);
+
+            SelectedProductType = Factory.ProductType;
 
         }
 
