@@ -31,7 +31,7 @@ namespace ModelLibrary.Models
         public double ProductionCost { get; set; }
         public double ProductCost { get; set; }
         public double ProductProfit { get; set; }
-        public string FacilityName { get; set; }
+        public string FacilityName { get; set; }    //TODO - usunąć po ręcznym zdefiniowaniu kolumn
         public double Income { get; set; }
         public double Cost { get; set; }
         public double Profit { get; set; }

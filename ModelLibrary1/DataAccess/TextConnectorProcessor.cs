@@ -254,7 +254,5 @@ namespace ModelLibrary.DataAccess
 
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
-
-        //TODO - listy w klasach: dla klasy lista statyczna zapisywana do csv jako lista ID
     }
 }

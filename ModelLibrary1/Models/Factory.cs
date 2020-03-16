@@ -9,7 +9,7 @@ namespace ModelLibrary.Models
     {
         //TODO - przemyśleć wybór produkowanego produktu (rodzaj fabryki, sprawdzenie, czy jest produkowany, ..., czy zapisywać w klasie produkt, czy tylko id?
         //ograniczyć publiczne metody, właściwości, szczególnie dotyczące ID, statycznej listy obiektów klasy, obliczania i w miarę możliwości zastąpić je przez metody zdefiniowane wewnątrz klasy
-        public new int FacilityType { get; private set; } = 1;
+        public override int FacilityType { get; protected set; } = 1;
         public override int Id { get; set; }
         //do usuniecia?
         public byte Tier { get; set; }

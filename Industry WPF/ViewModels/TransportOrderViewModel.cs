@@ -11,6 +11,17 @@ namespace Industry_WPF.ViewModels
     class TransportOrderViewModel : Screen, INotifyPropertyChangedEx
     {
         private TransportOrder _transportOrder;
+        private int _transportOrderId;
+        private string _transportOrderName;
+
+        private BindableCollection<Facility> _facilities;
+        private Facility _sender;
+        private Facility _receiver;
+        private ProductType _productType;
+        private BindableCollection<ProductType> _productTypes;
+        private int _capacity;
+
+
         public TransportOrder TransportOrder
         {
             get { return _transportOrder; }
@@ -20,8 +31,15 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => TransportOrder);
             }
         }
-
-        private string _transportOrderName;
+        public int TransportOrderId
+        {
+            get { return _transportOrderId; }
+            set
+            {
+                _transportOrderId = value;
+                NotifyOfPropertyChange(() => TransportOrderId);
+            }
+        }
         public string TransportOrderName
         {
             get { return _transportOrderName; }
@@ -33,18 +51,6 @@ namespace Industry_WPF.ViewModels
                 TransportOrder.Name = value;
             }
         }
-        private int _transportOrderId;
-        public int TransportOrderId
-        {
-            get { return _transportOrderId; }
-            set
-            {
-                _transportOrderId = value;
-                NotifyOfPropertyChange(() => TransportOrderId);
-            }
-        }
-
-        private BindableCollection<Facility> _facilities;
         public BindableCollection<Facility> Facilities
         {
             get { return _facilities; }
@@ -54,8 +60,6 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Facilities);
             }
         }
-
-        private Facility _sender;
         public Facility Sender
         {
             get { return _sender; }
@@ -65,7 +69,6 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Sender);
             }
         }
-        private Facility _receiver;
         public Facility Receiver
         {
             get { return _receiver; }
@@ -75,7 +78,6 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Receiver);
             }
         }
-        private ProductType _productType;
         public ProductType ProductType
         {
             get { return _productType; }
@@ -85,8 +87,15 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => ProductType);
             }
         }
-
-        private int _capacity;
+        public BindableCollection<ProductType> ProductTypes
+        {
+            get { return _productTypes; }
+            set
+            {
+                _productTypes = value;
+                NotifyOfPropertyChange(() => ProductTypes);
+            }
+        }
         public int Capacity
         {
             get { return _capacity; }
@@ -97,20 +106,9 @@ namespace Industry_WPF.ViewModels
             }
         }
 
-        private BindableCollection<ProductType> _productTypes;
-        public BindableCollection<ProductType> ProductTypes
-        {
-            get { return _productTypes; }
-            set
-            {
-                _productTypes = value;
-                NotifyOfPropertyChange(() => ProductTypes);
-            }
-        }
 
         public TransportOrderViewModel()
         {
-
         }
         public TransportOrderViewModel(TransportOrder transportOrder)
         {
@@ -123,7 +121,6 @@ namespace Industry_WPF.ViewModels
             Sender = transportOrder.Sender;
             Receiver = transportOrder.Receiver;
             Capacity = TransportOrder.Capacity;
-
         }
 
         public void Load()
@@ -152,14 +149,6 @@ namespace Industry_WPF.ViewModels
                 if (TransportOrder.GetTransportOrder(Sender, Receiver, ProductType) == null)
                     TransportOrder.Add();
             }
-
-
         }
-
-        //public void SetProduct()
-        //{
-        //    TransportOrder.Set(SelectedProductType);
-        //    Load();
-        //}
     }
 }

@@ -12,7 +12,23 @@ namespace Industry_WPF.ViewModels
 {
     class TransportOrdersViewModel : Screen, INotifyPropertyChangedEx
     {
+        private BindableCollection<TransportOrder> _transportOrders;
+
         private ICommand _command;
+
+
+        TransportOrderViewModel TransportOrderViewModel { get; set; }
+        TransportOrder TransportOrder { get; set; }
+
+        public BindableCollection<TransportOrder> TransportOrders
+        {
+            get { return _transportOrders; }
+            set
+            {
+                _transportOrders = value;
+                NotifyOfPropertyChange(() => TransportOrders);
+            }
+        }
         public ICommand Command
         {
             get
@@ -20,10 +36,14 @@ namespace Industry_WPF.ViewModels
                 return _command ?? (_command = new Commands.RelayCommand(x => { ExecuteCommand(x); }));
             }
         }
-        private void ExecuteCommand(object x)
+        
+        public TransportOrdersViewModel()
         {
-            //MessageBox.Show("Button clicked");
-            this.ShowTransportOrder((TransportOrder)x);
+        }
+
+        public void Load()
+        {
+            TransportOrders = new BindableCollection<TransportOrder>(TransportOrder.TransportOrders.Values);
         }
 
         public void ShowTransportOrder(TransportOrder transportOrder)
@@ -35,30 +55,6 @@ namespace Industry_WPF.ViewModels
 
             conductor.ActivateItem(TransportOrderViewModel);
         }
-
-        private BindableCollection<TransportOrder> _transportOrders;
-
-        public BindableCollection<TransportOrder> TransportOrders
-        {
-            get { return _transportOrders; }
-            set
-            {
-                _transportOrders = value;
-                NotifyOfPropertyChange(() => TransportOrders);
-            }
-        }
-        TransportOrderViewModel TransportOrderViewModel { get; set; }
-        TransportOrder TransportOrder { get; set; }
-
-        public TransportOrdersViewModel()
-        {
-        }
-
-        public void Load()
-        {
-            TransportOrders = new BindableCollection<TransportOrder>(TransportOrder.TransportOrders.Values);
-        }
-
         public void CreateNewTransportOrder()
         {
             TransportOrder = new TransportOrder();
@@ -67,6 +63,9 @@ namespace Industry_WPF.ViewModels
 
             conductor.ActivateItem(TransportOrderViewModel);
         }
-
+        private void ExecuteCommand(object x)
+        {
+            this.ShowTransportOrder((TransportOrder)x);
+        }
     }
 }

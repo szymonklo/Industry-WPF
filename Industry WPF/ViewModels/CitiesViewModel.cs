@@ -11,7 +11,6 @@ namespace Industry_WPF.ViewModels
     class CitiesViewModel : Screen, INotifyPropertyChangedEx
     {
         private BindableCollection<City> _cities;
-
         public BindableCollection<City> Cities
         {
             get { return _cities; }

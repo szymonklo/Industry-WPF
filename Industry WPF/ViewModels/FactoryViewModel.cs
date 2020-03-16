@@ -11,6 +11,15 @@ namespace Industry_WPF.ViewModels
     class FactoryViewModel : Screen, INotifyPropertyChangedEx
     {
         private Factory _factory;
+        private string _factoryName;
+        private BindableCollection<Product> _components;
+        private BindableCollection<Product> _products;
+        private BindableCollection<ProductType> _productTypes;
+        private ProductType _selectedProductType;
+        private Product _product;
+        private BindableCollection<KeyValuePair<int, int>> _productionAmountHistory;
+        private int _productionAmount;
+
         public Factory Factory
         {
             get { return _factory; }
@@ -20,8 +29,6 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Factory);
             }
         }
-
-        private string _factoryName;
         public string FactoryName
         {
             get { return _factoryName; }
@@ -34,7 +41,6 @@ namespace Industry_WPF.ViewModels
             }
         }
         //TODO - add list of ProductIn in separate GroupBox
-        private BindableCollection<Product> _components;
         public BindableCollection<Product> Components
         {
             get { return _components; }
@@ -45,8 +51,6 @@ namespace Industry_WPF.ViewModels
             }
         }
         //TODO - add list of ProductOut in separate GroupBox
-
-        private BindableCollection<Product> _products;
         public BindableCollection<Product> Products
         {
             get { return _products; }
@@ -56,7 +60,6 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Products);
             }
         }
-        private BindableCollection<ProductType> _productTypes;
         public BindableCollection<ProductType> ProductTypes
         {
             get { return _productTypes; }
@@ -66,7 +69,6 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => ProductTypes);
             }
         }
-        private ProductType _selectedProductType;
         public ProductType SelectedProductType
         {
             get { return _selectedProductType; }
@@ -79,7 +81,6 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Components);
             }
         }
-        private Product _product;
         public Product Product
         {
             get { return _product; }
@@ -89,8 +90,6 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Product);
             }
         }
-        private BindableCollection<KeyValuePair<int, int>> _productionAmountHistory;
-
         public BindableCollection<KeyValuePair<int, int>> ProductionAmountHistory
         {
             get { return _productionAmountHistory; }
@@ -100,20 +99,20 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => ProductionAmountHistory);
             }
         }
-
-        private int _productionAmount;
         public int ProductionAmount
         {
             get { return _productionAmount; }
             set
             {
                 _productionAmount = value;
+                NotifyOfPropertyChange(() => ProductionAmount);
             }
         }
+
         public FactoryViewModel()
         {
-
         }
+
         public FactoryViewModel(Factory factory)
         {
             Factory = factory;
@@ -123,7 +122,6 @@ namespace Industry_WPF.ViewModels
             ProductTypes = new BindableCollection<ProductType>(Factory.ProductTypes);
             SelectedProductType = Factory.ProductType;
             ProductionAmountHistory = new BindableCollection<KeyValuePair<int, int>>(Factory.ProductionAmountHistory);
-
         }
 
         public void Load()
@@ -137,9 +135,6 @@ namespace Industry_WPF.ViewModels
 
             SelectedProductType = Factory.ProductType;
             ProductionAmountHistory = new BindableCollection<KeyValuePair<int, int>>(Factory.ProductionAmountHistory);
-
-
-
         }
 
         public void SetProduct()

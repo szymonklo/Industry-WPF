@@ -15,10 +15,7 @@ namespace Industry_WPF.ViewModels
         private BindableCollection<Product> _products;
         public BindableCollection<Product> Products
         {
-            get
-            {
-                return _products;
-            }
+            get { return _products; }
             set
             {
                 _products = value;
@@ -27,7 +24,6 @@ namespace Industry_WPF.ViewModels
         }
         public ProductsViewModel()
         {
-            
         }
 
         public void Load()

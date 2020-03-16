@@ -11,15 +11,36 @@ namespace Industry_WPF.ViewModels
 {
     class FactoriesViewModel : Conductor<object>, INotifyPropertyChangedEx
     {
-        private BindableCollection<Factory> _factories;// = new BindableCollection<Factory>(World.Factories);
+        private FactoryViewModel _factoryViewModel;
+        private BindableCollection<FactoryViewModel> _items = new BindableCollection<FactoryViewModel>();
+
         private Factory _selectedFactory;
+        private BindableCollection<Factory> _factories;
 
-        private BindableCollection<FactoryType> _factoryTypes;
         private FactoryType _selectedFactoryType;
+        private BindableCollection<FactoryType> _factoryTypes;
 
-        private BindableCollection<FactoryViewModel> Items = new BindableCollection<FactoryViewModel>();
+        private ICommand _command;
 
-        public FactoryViewModel FactoryViewModel;
+        public FactoryViewModel FactoryViewModel
+        {
+            get { return _factoryViewModel; }
+            set
+            {
+                _factoryViewModel = value;
+                NotifyOfPropertyChange(() => SelectedFactory);
+            }
+        }
+        public BindableCollection<FactoryViewModel> Items
+        {
+            get { return _items; }
+            set
+            {
+                _items = value; 
+                NotifyOfPropertyChange(() => Items);
+            }
+        }
+        
         public Factory SelectedFactory
         {
             get { return _selectedFactory; }
@@ -38,15 +59,6 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => Factories);
             }
         }
-        public BindableCollection<FactoryType> FactoryTypes
-        {
-            get { return _factoryTypes; }
-            set
-            {
-                _factoryTypes = value;
-                NotifyOfPropertyChange(() => FactoryTypes);
-            }
-        }
         public FactoryType SelectedFactoryType
         {
             get { return _selectedFactoryType; }
@@ -56,31 +68,28 @@ namespace Industry_WPF.ViewModels
                 NotifyOfPropertyChange(() => SelectedFactoryType);
             }
         }
+        public BindableCollection<FactoryType> FactoryTypes
+        {
+            get { return _factoryTypes; }
+            set
+            {
+                _factoryTypes = value;
+                NotifyOfPropertyChange(() => FactoryTypes);
+            }
+        }
+        
+
         public FactoriesViewModel()
         {
-            //Factories = new BindableCollection<Factory>(World.Factories);
             Items.Add(new FactoryViewModel());
         }
+
 
         public void Load()
         {
             Factories = new BindableCollection<Factory>(Factory.Factories);
             FactoryTypes = new BindableCollection<FactoryType>(FactoryType.FactoryTypes);
             FactoryViewModel?.Load();
-        }
-
-        private ICommand _command;
-        public ICommand Command
-        {
-            get
-            {
-                return _command ?? (_command = new Commands.RelayCommand(x => { ExecuteCommand(x); }));
-            }
-        }
-        private void ExecuteCommand(object x)
-        {
-            //MessageBox.Show("Button clicked");
-            this.ShowFactory((Factory)x);
         }
 
         public void ShowFactory(Factory factory)
@@ -92,21 +101,6 @@ namespace Industry_WPF.ViewModels
 
             conductor.ActivateItem(FactoryViewModel);
         }
-        //previous way to show factory details
-        //public void ShowFactory()
-        //{
-        //    if (SelectedFactory is null)
-        //        return;
-        //    var conductor = this.Parent as IConductor;
-        //    FactoryViewModel = new FactoryViewModel(SelectedFactory);
-            
-        //    conductor.ActivateItem(FactoryViewModel);
-            
-        //    //var f = new FactoryViewModel(SelectedFactory);
-        //    //Items.Add(f);
-        //    //ActivateItem(f);
-        //}
-
         public void BuildNewFactory()
         {
             if (SelectedFactoryType is null)
@@ -117,6 +111,18 @@ namespace Industry_WPF.ViewModels
             FactoryViewModel = new FactoryViewModel(SelectedFactory);
 
             conductor.ActivateItem(FactoryViewModel);
+        }
+        public ICommand Command
+        {
+            get
+            {
+                return _command ?? (_command = new Commands.RelayCommand(x => { ExecuteCommand(x); }));
+            }
+        }
+        private void ExecuteCommand(object x)
+        {
+            //MessageBox.Show("Button clicked");
+            this.ShowFactory((Factory)x);
         }
     }
 }

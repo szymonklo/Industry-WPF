@@ -9,7 +9,7 @@ namespace ModelLibrary.Models
         public int Population { get; set; }
         public override int Id { get; set; }
         private static int lastId { get; set; }
-        public new int FacilityType { get; private set; } = 2;
+        public override int FacilityType { get; protected set; } = 2;
 
         public static List<City> Cities = new List<City>();
 
